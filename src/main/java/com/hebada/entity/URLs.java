@@ -5,13 +5,20 @@ package com.hebada.entity;
  */
 public class URLs {
 
-  public static final String DEFAULT = "/";
+    public static final String DEFAULT = "/";
 
-  // menu url
-  public static final String BASE_MENU = "/menu";
+    // user url
+    public static final String USER = "/user";
+    public static final String USER_LOGIN = "/login";
+    public static final String USER_ID = "/{id}";
 
-  // news url
-  public static final String NEWS = "/news";
-  public static final String NEWS_ID = "/{id}";
-  public static final String NEWS_LIST = "/list";
+    // menu url
+    public static final String MENU = "/menu";
+    public static final String MENU_ID = "/{id}";
+    public static final String MENU_LIST = "/list";
+
+    // news url
+    public static final String NEWS = "/news";
+    public static final String NEWS_ID = "/{id}";
+    public static final String NEWS_LIST = "/list";
 }
