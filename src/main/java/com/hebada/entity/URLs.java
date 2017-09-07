@@ -21,4 +21,9 @@ public class URLs {
     public static final String NEWS = "/news";
     public static final String NEWS_ID = "/{id}";
     public static final String NEWS_LIST = "/list";
+
+    //image url
+    public static final String IMAGE = "/image";
+    public static final String IMAGE_UPLOAD = "/upload";
+    public static final String IMAGE_ID = "/{id}";
 }

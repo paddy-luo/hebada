@@ -13,6 +13,7 @@
         <apache.collections.version>3.2.2</apache.collections.version>
         <apache.codec.version>1.10</apache.codec.version>
         <apache.io.version>2.5</apache.io.version>
+        <apache.lang3.version>3.6</apache.lang3.version>
     </properties>
 
     <!-- Inherit defaults from Spring Boot -->
@@ -75,7 +76,11 @@
             <artifactId>commons-io</artifactId>
             <version>${apache.io.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${apache.lang3.version}</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>hebada</finalName>
