@@ -6,24 +6,37 @@ package com.hebada.entity;
 public class URLs {
 
     public static final String DEFAULT = "/";
+    public static final String LIST = "/list";
+    public static final String ID = "/{id}";
 
     // user url
     public static final String USER = "/user";
     public static final String USER_LOGIN = "/login";
-    public static final String USER_ID = "/{id}";
+    public static final String USER_LOGOUT = "/logout";
+    public static final String USER_ID = ID;
+    public static final String USER_RETURN_LOGIN = URLs.USER + URLs.USER_LOGIN;
 
-    // menu url
-    public static final String MENU = "/menu";
-    public static final String MENU_ID = "/{id}";
-    public static final String MENU_LIST = "/list";
+    // catalog url
+    public static final String CATALOG = "/catalog";
+    public static final String CATALOG_ID = ID;
+    public static final String CATALOG_LIST = LIST;
 
-    // news url
-    public static final String NEWS = "/news";
-    public static final String NEWS_ID = "/{id}";
-    public static final String NEWS_LIST = "/list";
 
     //image url
     public static final String IMAGE = "/image";
     public static final String IMAGE_UPLOAD = "/upload";
-    public static final String IMAGE_ID = "/{id}";
+    public static final String IMAGE_ID = ID;
+
+    // article url include news ex.
+    public static final String ARTICLE = "/article";
+    public static final String ARTICLE_ID = ID;
+    public static final String ARTICLE_LIST = LIST;
+    public static final String ARTICLE_TOP = "/top";
+
+    // product  url
+    public static final String PRODUCT = "/product";
+    public static final String PRODUCT_ID = ID;
+    public static final String PRODUCT_LIST = LIST;
+
+
 }

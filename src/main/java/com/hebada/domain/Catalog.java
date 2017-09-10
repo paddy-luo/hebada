@@ -11,8 +11,8 @@ import java.util.List;
 /**
  * Created by paddy on 2017/9/3.
  */
-@Entity(name = "t_menu")
-public class MenuItem extends AbstractDomain {
+@Entity(name = "t_catalog")
+public class Catalog extends AbstractDomain {
 
     @Id
     @GeneratedValue
@@ -24,14 +24,14 @@ public class MenuItem extends AbstractDomain {
     @Column(name = "english_name")
     private String englishName;
 
-    @Column(name = "icon_url")
-    private String iconUrl;
-
     @Column(name = "parent_id")
     private Long parentId;
 
     @Transient
-    private final List<MenuItem> children = new ArrayList<MenuItem>();
+    private final List<Catalog> children = new ArrayList<Catalog>();
+
+    public Catalog() {
+    }
 
     public long getId() {
         return id;
@@ -57,14 +57,6 @@ public class MenuItem extends AbstractDomain {
         this.englishName = englishName;
     }
 
-    public String getIconUrl() {
-        return iconUrl;
-    }
-
-    public void setIconUrl(String iconUrl) {
-        this.iconUrl = iconUrl;
-    }
-
     public Long getParentId() {
         return parentId;
     }
@@ -73,7 +65,7 @@ public class MenuItem extends AbstractDomain {
         this.parentId = parentId;
     }
 
-    public List<MenuItem> getChildren() {
+    public List<Catalog> getChildren() {
         return children;
     }
 

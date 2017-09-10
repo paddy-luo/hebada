@@ -20,19 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value = URLs.USER)
-@Api(basePath = URLs.USER, value = "UserRestController api", description = "User operation")
+@Api(basePath = URLs.USER, value = "UserRestController api", description = "User api")
 public class UserRestController {
 
     @Autowired
     private UserService userService;
-
-    @RequestMapping(value = URLs.USER_LOGIN, method = RequestMethod.POST)
-    @ApiOperation(value = "login", httpMethod = HttpMethod.POST, notes = "login")
-    public AjaxResponse login(@RequestBody UserRequest request) {
-        boolean hasUser = userService.findByNameAndPassword(request.getName(), request.getPassword());
-        if (hasUser) return AjaxResponse.ok();
-        else return AjaxResponse.error().withDescription("账户和密码错误");
-    }
 
     @RequestMapping(value = URLs.DEFAULT, method = RequestMethod.POST)
     @ApiOperation(value = "saveOrUpdate", httpMethod = HttpMethod.POST, notes = "saveOrUpdate or update user info")

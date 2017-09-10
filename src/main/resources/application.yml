@@ -3,13 +3,18 @@ spring:
     url: jdbc:mysql://localhost/hebada?characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false
     username: root
     password: 1234
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-title: com.mysql.cj.jdbc.Driver
   jpa:
     database: mysql
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
   devtools:
     restart:
       enabled: true
+  http:
+    multipart:
+      max-file-size: 2MB
+server:
+  port: 8082
 

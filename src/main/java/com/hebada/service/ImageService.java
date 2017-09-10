@@ -2,11 +2,13 @@ package com.hebada.service;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -18,35 +20,40 @@ import java.util.Map;
 @Service
 public class ImageService {
 
+    @Value("${image.file.maxSize:1}")
+    private int imageFileSize;
+
     public List<String> upload(Map<String, MultipartFile> fileMap, String path) {
         List<String> filesPath = Lists.newArrayList();
         if (fileMap == null || fileMap.size() == 0) return filesPath;
         for (Map.Entry<String, MultipartFile> entry : fileMap.entrySet()) {
             MultipartFile file = entry.getValue();
             try {
-                FileUtils.copyInputStreamToFile(file.getInputStream(), );
+                String filePath = createFile(file.getInputStream(), path, file.getContentType());
+                filesPath.add(filePath);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        return filesPath;
     }
 
-    private File createFile(String path, String contentType) {
+    private String createFile(InputStream source, String path, String contentType) throws IOException {
         String fileDirPath = path + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
         File dir = new File(fileDirPath);
         String filePath = fileDirPath + getRandomString(5) + "." + contentType;
-        if (!dir.exists()) {
+        if (!dir.exists())
             dir.mkdirs();
-            return new File(filePath);
+        File destination = new File(filePath);
+        while (destination.exists()) {
+            filePath = fileDirPath + getRandomString(5) + "." + contentType;
+            destination = new File(filePath);
         }
-        File file = new File(filePath);
-        while (file.exists()) {
-            file = new File(fileDirPath + getRandomString(5) + "." + contentType);
-        }
-        return file;
+        FileUtils.copyInputStreamToFile(source, destination);
+        return filePath;
     }
 
-    public String getRandomString(int length) {
+    private String getRandomString(int length) {
         String KeyString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         StringBuffer sb = new StringBuffer();
         int len = KeyString.length();
