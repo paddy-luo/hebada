@@ -5,7 +5,7 @@ package com.hebada.web.request;
  */
 public class PageRequest {
 
-    protected static final int DEFAULT_PAGE_NUM = 1;
+    protected static final int DEFAULT_PAGE_NUM = 0;
     protected static final int DEFAULT_PAGE_SIZE = 10;
 
     protected int pageNumber;

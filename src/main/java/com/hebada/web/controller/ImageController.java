@@ -31,7 +31,7 @@ public class ImageController {
     @ApiOperation(value = "upload", notes = "image upload", httpMethod = HttpMethod.POST)
     public AjaxResponse upload(MultipartHttpServletRequest request) {
         Map<String, MultipartFile> fileMap = request.getFileMap();
-        List<String> upload = imageService.upload(fileMap, request.getServletContext().getRealPath("/images"));
+        List<String> upload = imageService.upload(fileMap, request.getServletContext().getRealPath(""));
         return AjaxResponse.ok().withData(upload);
     }
 

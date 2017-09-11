@@ -16,5 +16,5 @@ spring:
     multipart:
       max-file-size: 2MB
 server:
-  port: 8082
+  port: 80
 
