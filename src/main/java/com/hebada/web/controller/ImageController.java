@@ -6,15 +6,17 @@ import com.hebada.service.ImageService;
 import com.hebada.web.response.AjaxResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by paddy on 2017/9/7.
@@ -24,7 +26,7 @@ import java.util.Map;
 @RestController
 public class ImageController {
 
-    @Autowired
+    @Inject
     private ImageService imageService;
 
     @RequestMapping(value = URLs.IMAGE_UPLOAD, method = RequestMethod.POST)

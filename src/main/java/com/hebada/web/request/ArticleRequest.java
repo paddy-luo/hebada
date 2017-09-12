@@ -7,49 +7,58 @@ import com.hebada.entity.ArticleStatus;
  */
 public class ArticleRequest {
 
-    private String title;
-    private long catalogId;
-    private String keyWords;
-    private String content;
-    private ArticleStatus status;
+  private long id;
+  private String title;
+  private long catalogId;
+  private String keyWords;
+  private String content;
+  private ArticleStatus status;
 
-    public String getTitle() {
-        return title;
-    }
+  public long getId() {
+    return id;
+  }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+  public void setId(long id) {
+    this.id = id;
+  }
 
-    public long getCatalogId() {
-        return catalogId;
-    }
+  public String getTitle() {
+    return title;
+  }
 
-    public void setCatalogId(long catalogId) {
-        this.catalogId = catalogId;
-    }
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-    public String getKeyWords() {
-        return keyWords;
-    }
+  public long getCatalogId() {
+    return catalogId;
+  }
 
-    public void setKeyWords(String keyWords) {
-        this.keyWords = keyWords;
-    }
+  public void setCatalogId(long catalogId) {
+    this.catalogId = catalogId;
+  }
 
-    public String getContent() {
-        return content;
-    }
+  public String getKeyWords() {
+    return keyWords;
+  }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+  public void setKeyWords(String keyWords) {
+    this.keyWords = keyWords;
+  }
 
-    public ArticleStatus getStatus() {
-        return status;
-    }
+  public String getContent() {
+    return content;
+  }
 
-    public void setStatus(ArticleStatus status) {
-        this.status = status;
-    }
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public ArticleStatus getStatus() {
+    return status;
+  }
+
+  public void setStatus(ArticleStatus status) {
+    this.status = status;
+  }
 }

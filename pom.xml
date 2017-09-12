@@ -15,6 +15,7 @@
         <apache.io.version>2.5</apache.io.version>
         <apache.lang3.version>3.6</apache.lang3.version>
         <thumbnailator.version>0.4.8</thumbnailator.version>
+        <inject.version>1</inject.version>
     </properties>
 
     <!-- Inherit defaults from Spring Boot -->
@@ -25,6 +26,12 @@
     </parent>
 
     <dependencies>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>${inject.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

@@ -8,7 +8,9 @@ import com.hebada.web.request.UserRequest;
 import com.hebada.web.response.AjaxResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.inject.Inject;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,21 +25,21 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(basePath = URLs.USER, value = "UserRestController api", description = "User api")
 public class UserRestController {
 
-    @Autowired
-    private UserService userService;
+  @Inject
+  private UserService userService;
 
-    @RequestMapping(value = URLs.DEFAULT, method = RequestMethod.POST)
-    @ApiOperation(value = "saveOrUpdate", httpMethod = HttpMethod.POST, notes = "saveOrUpdate or update user info")
-    public AjaxResponse saveOrUpdate(@RequestBody UserRequest request) {
-        boolean saveOrUpdate = userService.saveOrUpdate(new User(request.getName(), request.getPassword()));
-        if (saveOrUpdate) return AjaxResponse.ok();
-        else return AjaxResponse.error().withDescription("操作失败");
-    }
+  @RequestMapping(value = URLs.DEFAULT, method = RequestMethod.POST)
+  @ApiOperation(value = "save", httpMethod = HttpMethod.POST, notes = "save or update user info")
+  public AjaxResponse saveOrUpdate(@RequestBody UserRequest request) {
+    boolean saveOrUpdate = userService.saveOrUpdate(new User(request.getName(), request.getPassword()));
+    if (saveOrUpdate) return AjaxResponse.ok();
+    else return AjaxResponse.error().withDescription("操作失败");
+  }
 
-    @RequestMapping(value = URLs.USER_ID, method = RequestMethod.DELETE)
-    @ApiOperation(value = "delete", httpMethod = HttpMethod.DELETE, notes = "delete user")
-    public AjaxResponse delete(@PathVariable long id) {
-        userService.delete(id);
-        return AjaxResponse.ok();
-    }
+  @RequestMapping(value = URLs.USER_ID, method = RequestMethod.DELETE)
+  @ApiOperation(value = "delete", httpMethod = HttpMethod.DELETE, notes = "delete user")
+  public AjaxResponse delete(@PathVariable long id) {
+    userService.delete(id);
+    return AjaxResponse.ok();
+  }
 }
