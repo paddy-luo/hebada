@@ -7,6 +7,8 @@
     <groupId>com.hebada</groupId>
     <artifactId>hebada</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
     <properties>
         <springfox.version>2.7.0</springfox.version>
         <mysql.connector.version>6.0.6</mysql.connector.version>
@@ -15,6 +17,7 @@
         <apache.io.version>2.5</apache.io.version>
         <apache.lang3.version>3.6</apache.lang3.version>
         <thumbnailator.version>0.4.8</thumbnailator.version>
+        <fastjson.version>1.2.38</fastjson.version>
         <inject.version>1</inject.version>
     </properties>
 
@@ -35,6 +38,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -96,6 +105,13 @@
             <artifactId>thumbnailator</artifactId>
             <version>${thumbnailator.version}</version>
         </dependency>
+        <!-- alibaba json -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

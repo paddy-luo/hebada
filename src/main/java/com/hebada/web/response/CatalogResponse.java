@@ -1,17 +1,19 @@
-package com.hebada.web.request;
+package com.hebada.web.response;
 
-import com.hebada.entity.RouterTemplateName;
+import com.google.common.collect.Lists;
+
+import java.util.List;
 
 /**
- * Created by paddy on 2017/9/9.
+ * Created by paddy on 2017/9/14.
  */
-public class CatalogRequest {
+public class CatalogResponse {
 
     private long id;
     private String chineseName;
     private String englishName;
-    private Long parentId;
-    private RouterTemplateName templateName;
+    private String templateName;
+    private final List<CatalogResponse> children = Lists.newArrayList();
 
     public long getId() {
         return id;
@@ -37,19 +39,15 @@ public class CatalogRequest {
         this.englishName = englishName;
     }
 
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
-
-    public RouterTemplateName getTemplateName() {
+    public String getTemplateName() {
         return templateName;
     }
 
-    public void setTemplateName(RouterTemplateName templateName) {
+    public void setTemplateName(String templateName) {
         this.templateName = templateName;
+    }
+
+    public List<CatalogResponse> getChildren() {
+        return children;
     }
 }

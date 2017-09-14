@@ -16,4 +16,8 @@ public interface ArticleJpaRepository extends JpaRepository<Article, Long> {
 
     // todo: 获取五条新闻、公告
     List<Article> findTop5ById(long id);
+
+    List<Article> findArticlesByCatalogIdAndPublishTimedExists(long catalogId);
+
+    List<Article> findArticlesByCatalogId(long catalogId);
 }

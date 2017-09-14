@@ -20,6 +20,7 @@ public class URLs {
     public static final String CATALOG = "/catalog";
     public static final String CATALOG_ID = ID;
     public static final String CATALOG_LIST = LIST;
+    public static final String CATALOG_CHILDREN_LIST = "/parent" + ID;
 
 
     //image url

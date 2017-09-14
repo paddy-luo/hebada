@@ -1,7 +1,11 @@
 package com.hebada.domain;
 
+import com.hebada.entity.RouterTemplateName;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
@@ -26,6 +30,10 @@ public class Catalog extends AbstractDomain {
 
     @Column(name = "parent_id")
     private Long parentId;
+
+    @Column(name = "t_template_name")
+    @Enumerated(EnumType.STRING)
+    private RouterTemplateName templateName;
 
     @Transient
     private final List<Catalog> children = new ArrayList<Catalog>();
@@ -63,6 +71,14 @@ public class Catalog extends AbstractDomain {
 
     public void setParentId(Long parentId) {
         this.parentId = parentId;
+    }
+
+    public RouterTemplateName getTemplateName() {
+        return templateName;
+    }
+
+    public void setTemplateName(RouterTemplateName templateName) {
+        this.templateName = templateName;
     }
 
     public List<Catalog> getChildren() {
