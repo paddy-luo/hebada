@@ -18,21 +18,22 @@ public class URLs {
 
     // catalog url
     public static final String CATALOG = "/catalog";
+    public static final String ARTICLE = "/article";
+
     public static final String CATALOG_ID = ID;
     public static final String CATALOG_LIST = LIST;
     public static final String CATALOG_CHILDREN_LIST = "/parent" + ID;
+    public static final String CATALOG_LATEST_ARTICLE = "{catalogId}" + ARTICLE;
 
+    // article url include news ex.
+    public static final String ARTICLE_ID = ID;
+    public static final String ARTICLE_LIST = LIST;
+    public static final String ARTICLE_TOP = "/top";
 
     //image url
     public static final String IMAGE = "/image";
     public static final String IMAGE_UPLOAD = "/upload";
     public static final String IMAGE_ID = ID;
-
-    // article url include news ex.
-    public static final String ARTICLE = "/article";
-    public static final String ARTICLE_ID = ID;
-    public static final String ARTICLE_LIST = LIST;
-    public static final String ARTICLE_TOP = "/top";
 
     // product  url
     public static final String PRODUCT = "/product";

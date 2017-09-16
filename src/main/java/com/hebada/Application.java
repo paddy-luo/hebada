@@ -5,8 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
@@ -16,9 +14,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 /**
  * Created by paddy on 2017/9/3.
  */
-@EnableJpaRepositories(basePackages = "com.hebada.repository")
+
+
 @EnableSwagger2
-@EnableTransactionManagement
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {
 

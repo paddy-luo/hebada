@@ -1,6 +1,7 @@
 package com.hebada.converter;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.hebada.domain.Catalog;
 import com.hebada.web.request.CatalogRequest;
 import com.hebada.web.response.CatalogResponse;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by paddy on 2017/9/10.
@@ -50,18 +52,18 @@ public class CatalogConverter {
         response.setTemplateName(catalog.getTemplateName().getName());
         if (CollectionUtils.isEmpty(catalog.getChildren())) return response;
         for (Catalog children : catalog.getChildren()) {
-            response.getChildren().add(convertToCatalogResponse(children));
+            response.getChildren().put(children.getId(), convertToCatalogResponse(children));
         }
         return response;
     }
 
-    public List<CatalogResponse> convertToCatalogResponse(List<Catalog> result) {
-        List<CatalogResponse> catalogResponseList = Lists.newArrayList();
-        if (CollectionUtils.isEmpty(result)) return catalogResponseList;
+    public Map<Long, CatalogResponse> convertToCatalogResponse(List<Catalog> result) {
+        Map<Long, CatalogResponse> catalogResponseHashMap = Maps.newHashMap();
+        if (CollectionUtils.isEmpty(result)) return catalogResponseHashMap;
         for (Catalog catalog : result) {
-            catalogResponseList.add(convertToCatalogResponse(catalog));
+            catalogResponseHashMap.put(catalog.getId(), convertToCatalogResponse(catalog));
         }
-        return catalogResponseList;
+        return catalogResponseHashMap;
     }
 
     public List<Catalog> convertToCatalogList(List<Catalog> result) {

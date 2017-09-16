@@ -2,14 +2,20 @@ package com.hebada.service;
 
 import com.hebada.converter.ArticleConverter;
 import com.hebada.domain.Article;
+import com.hebada.entity.ArticleStatus;
 import com.hebada.repository.ArticleJpaRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.inject.Inject;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
-import java.util.List;
 
 /**
  * Created by paddy on 2017/9/9.
@@ -43,15 +49,27 @@ public class ArticleService {
         return articleJpaRepository.findOne(id);
     }
 
-    public Page<Article> findByCatalogId(long catalogId, PageRequest request) {
-        return articleJpaRepository.findByCatalogId(catalogId, request);
+    public Page<Article> findArticles(Article article, PageRequest request) {
+        return articleJpaRepository.findAll(where(article.getTitle()
+            , article.getCatalogId(), article.getStatus()), request);
     }
 
-    public List<Article> findTop5ByCatalogId(long id) {
-        return articleJpaRepository.findTop5ById(id);
-    }
 
-    public List<Article> findArticlesByCatalogId(long catalogId) {
-        return articleJpaRepository.findArticlesByCatalogId(catalogId);
+    private Specification<Article> where(final String title, final long catalogId, final ArticleStatus status) {
+        return new Specification<Article>() {
+
+            @Override
+            public Predicate toPredicate(Root root, CriteriaQuery query, CriteriaBuilder cb) {
+                Predicate predicates = cb.conjunction();
+                if (StringUtils.hasLength(title))
+                    predicates.getExpressions().add(cb.like(root.get("title"), "%" + title + "%"));
+                if (catalogId > 0)
+                    predicates.getExpressions().add(cb.equal(root.get("catalogId"), catalogId));
+                if (status != null)
+                    predicates.getExpressions().add(cb.equal(root.get("status"), status));
+                query.orderBy(cb.desc(root.get("id")));
+                return predicates;
+            }
+        };
     }
 }

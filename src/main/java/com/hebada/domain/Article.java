@@ -44,6 +44,13 @@ public class Article extends AbstractDomain {
     @Column(name = "publish_timed")
     private Date publishTimed;
 
+    public Article() {
+    }
+
+    public Article(long catalogId) {
+        this.catalogId = catalogId;
+    }
+
     public long getId() {
         return id;
     }

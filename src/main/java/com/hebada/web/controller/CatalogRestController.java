@@ -1,9 +1,13 @@
 package com.hebada.web.controller;
 
+import com.hebada.converter.ArticleConverter;
 import com.hebada.converter.CatalogConverter;
+import com.hebada.domain.Article;
 import com.hebada.domain.Catalog;
+import com.hebada.entity.ArticleStatus;
 import com.hebada.entity.HttpMethod;
 import com.hebada.entity.URLs;
+import com.hebada.service.ArticleService;
 import com.hebada.service.CatalogService;
 import com.hebada.web.request.CatalogRequest;
 import com.hebada.web.response.AjaxResponse;
@@ -11,6 +15,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +39,11 @@ public class CatalogRestController {
     @Inject
     private CatalogService catalogService;
     @Inject
+    private ArticleService articleService;
+    @Inject
     private CatalogConverter catalogConverter;
+    @Inject
+    private ArticleConverter articleConverter;
 
     // load all catalog
     @RequestMapping(value = URLs.CATALOG_LIST, method = RequestMethod.GET)
@@ -80,5 +90,15 @@ public class CatalogRestController {
     public AjaxResponse getChildrenList(@PathVariable(name = "id") long parentId) {
         List<Catalog> catalogList = catalogConverter.convertToCatalogList(catalogService.findAllByParentId(parentId));
         return AjaxResponse.ok().withData(catalogConverter.convertToCatalogResponse(catalogList));
+    }
+
+    @RequestMapping(value = URLs.CATALOG_LATEST_ARTICLE, method = RequestMethod.GET)
+    @ApiOperation(value = "getLatestArticle", httpMethod = HttpMethod.GET, notes = "getLatestArticle")
+    public AjaxResponse getLatestArticle(@PathVariable long catalogId) {
+        Article article = new Article(catalogId);
+        article.setStatus(ArticleStatus.PUBLISHED);
+        Page<Article> articles = articleService.findArticles(article, new PageRequest(0, 10));
+        if (!articles.hasContent()) return AjaxResponse.ok();
+        return AjaxResponse.ok().withData(articleConverter.convertToArticleResponse(articles.getContent().get(0)));
     }
 }

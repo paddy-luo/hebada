@@ -1,13 +1,17 @@
 package com.hebada.web.controller;
 
 import com.hebada.converter.ArticleConverter;
+import com.hebada.domain.Article;
 import com.hebada.entity.HttpMethod;
 import com.hebada.entity.URLs;
 import com.hebada.service.ArticleService;
 import com.hebada.web.request.ArticleRequest;
+import com.hebada.web.request.ArticleSearchRequest;
 import com.hebada.web.response.AjaxResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -61,5 +65,12 @@ public class ArticleRestController {
         return AjaxResponse.ok();
     }
 
-    //todo: 文章列表， 类别文章的数量， 最新的公告，新闻等
+    @RequestMapping(value = URLs.ARTICLE_LIST, method = RequestMethod.POST)
+    @ApiOperation(value = "getArticleList", httpMethod = HttpMethod.POST, notes = "getArticleListByCatalogId")
+    public AjaxResponse getArticleList(@RequestBody ArticleSearchRequest request) {
+        Page<Article> articles = articleService.findArticles(articleConverter.convertToArticleSearch(request),
+            new PageRequest(request.getPageNumber(), request.getPageSize()));
+        return AjaxResponse.ok().withData(articles);
+    }
+
 }

@@ -3,24 +3,13 @@ package com.hebada.web.request;
 import com.hebada.entity.ArticleStatus;
 
 /**
- * Created by paddy on 2017/9/9.
+ * Created by paddy on 2017/9/16.
  */
-public class ArticleRequest {
+public class ArticleSearchRequest extends PageRequest {
 
-    private long id;
     private String title;
     private long catalogId;
-    private String keyWords;
-    private String content;
     private ArticleStatus status;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;
@@ -36,22 +25,6 @@ public class ArticleRequest {
 
     public void setCatalogId(long catalogId) {
         this.catalogId = catalogId;
-    }
-
-    public String getKeyWords() {
-        return keyWords;
-    }
-
-    public void setKeyWords(String keyWords) {
-        this.keyWords = keyWords;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public ArticleStatus getStatus() {
