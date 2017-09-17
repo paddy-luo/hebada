@@ -34,7 +34,6 @@ public class CatalogConverter {
         return catalog;
     }
 
-
     public Catalog convertToCatalog(Catalog catalog, Catalog catalogDomain) {
         catalogDomain.setChineseName(catalog.getChineseName());
         catalogDomain.setEnglishName(catalog.getEnglishName());
@@ -50,9 +49,11 @@ public class CatalogConverter {
         response.setChineseName(catalog.getChineseName());
         response.setEnglishName(catalog.getEnglishName());
         response.setTemplateName(catalog.getTemplateName().getName());
+        if (catalog.getParentId() != null)
+            response.setParentId(catalog.getParentId());
         if (CollectionUtils.isEmpty(catalog.getChildren())) return response;
         for (Catalog children : catalog.getChildren()) {
-            response.getChildren().put(children.getId(), convertToCatalogResponse(children));
+            response.getChildren().add(convertToCatalogResponse(children));
         }
         return response;
     }

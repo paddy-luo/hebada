@@ -3,12 +3,14 @@ package com.hebada.web.request;
 /**
  * Created by paddy on 2017/9/10.
  */
-public class CommonRequest {
+public class ProductRequest {
 
     private long id;
     private String name;
     private String description;
+    private long catalogId;
     private String imageUrl;
+    private String content;
 
     public long getId() {
         return id;
@@ -40,5 +42,21 @@ public class CommonRequest {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public long getCatalogId() {
+        return catalogId;
+    }
+
+    public void setCatalogId(long catalogId) {
+        this.catalogId = catalogId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

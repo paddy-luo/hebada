@@ -1,27 +1,14 @@
-package com.hebada.domain;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+package com.hebada.web.response;
 
 /**
- * Created by paddy on 2017/9/10.
+ * Created by paddy on 2017/9/16.
  */
-@MappedSuperclass
-public class CommonDomain extends AbstractDomain {
+public class ProductResponse {
 
-    @Id
-    @GeneratedValue
     private long id;
-
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "description")
     private String description;
-
-    @Column(name = "imageUrl")
+    private String content;
     private String imageUrl;
 
     public long getId() {
@@ -46,6 +33,14 @@ public class CommonDomain extends AbstractDomain {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getImageUrl() {

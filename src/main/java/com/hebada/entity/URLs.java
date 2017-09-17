@@ -19,16 +19,18 @@ public class URLs {
     // catalog url
     public static final String CATALOG = "/catalog";
     public static final String ARTICLE = "/article";
+    public static final String PRODUCT = "/product";
 
     public static final String CATALOG_ID = ID;
     public static final String CATALOG_LIST = LIST;
     public static final String CATALOG_CHILDREN_LIST = "/parent" + ID;
     public static final String CATALOG_LATEST_ARTICLE = "{catalogId}" + ARTICLE;
+    public static final String CATALOG_ARTICLE_LIST = "{catalogId}" + ARTICLE + LIST;
+    public static final String CATALOG_PRODUCT_LIST = "{catalogId}" + PRODUCT + LIST;
 
     // article url include news ex.
     public static final String ARTICLE_ID = ID;
     public static final String ARTICLE_LIST = LIST;
-    public static final String ARTICLE_TOP = "/top";
 
     //image url
     public static final String IMAGE = "/image";
@@ -36,9 +38,7 @@ public class URLs {
     public static final String IMAGE_ID = ID;
 
     // product  url
-    public static final String PRODUCT = "/product";
     public static final String PRODUCT_ID = ID;
-    public static final String PRODUCT_LIST = LIST;
 
 
 }

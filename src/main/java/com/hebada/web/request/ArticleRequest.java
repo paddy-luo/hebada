@@ -11,6 +11,7 @@ public class ArticleRequest {
     private String title;
     private long catalogId;
     private String keyWords;
+    private String articlePageImageUrl;
     private String content;
     private ArticleStatus status;
 
@@ -52,6 +53,14 @@ public class ArticleRequest {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getArticlePageImageUrl() {
+        return articlePageImageUrl;
+    }
+
+    public void setArticlePageImageUrl(String articlePageImageUrl) {
+        this.articlePageImageUrl = articlePageImageUrl;
     }
 
     public ArticleStatus getStatus() {

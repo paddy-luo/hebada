@@ -6,23 +6,23 @@ import com.hebada.service.ImageService;
 import com.hebada.web.response.AjaxResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
-import java.util.List;
-import java.util.Map;
-
-import javax.inject.Inject;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.inject.Inject;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by paddy on 2017/9/7.
  */
 @RequestMapping(value = URLs.IMAGE)
 @Api(value = "image api", description = "image api", basePath = URLs.IMAGE)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class ImageController {
 

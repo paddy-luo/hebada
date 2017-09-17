@@ -1,18 +1,17 @@
 package com.hebada.converter;
 
-import com.google.common.collect.Lists;
 import com.hebada.domain.Article;
 import com.hebada.entity.ArticleStatus;
 import com.hebada.utils.ImageUtils;
 import com.hebada.web.request.ArticleRequest;
 import com.hebada.web.request.ArticleSearchRequest;
 import com.hebada.web.response.ArticleResponse;
-import org.apache.commons.collections.CollectionUtils;
+import com.hebada.web.response.PageResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by paddy on 2017/9/9.
@@ -47,15 +46,6 @@ public class ArticleConverter {
         return articleDomain;
     }
 
-    public List<ArticleResponse> convertToArticleResponse(List<Article> articleList) {
-        if (CollectionUtils.isEmpty(articleList)) return null;
-        List<ArticleResponse> responseList = Lists.newArrayList();
-        for (Article article : articleList) {
-            responseList.add(convertToArticleResponse(article));
-        }
-        return responseList;
-    }
-
     public ArticleResponse convertToArticleResponse(Article article) {
         if (article == null) return null;
         ArticleResponse response = new ArticleResponse();
@@ -77,6 +67,17 @@ public class ArticleConverter {
         articleQuery.setCatalogId(request.getCatalogId());
         articleQuery.setStatus(request.getStatus());
         return articleQuery;
+    }
+
+    public PageResponse<ArticleResponse> convertToArticlePageResponse(Page<Article> articlePage, int currentPage, int pageSize) {
+        PageResponse<ArticleResponse> pageResponse = new PageResponse<ArticleResponse>();
+        pageResponse.setPageSize(pageSize);
+        pageResponse.setCurrentPage(currentPage);
+        pageResponse.setTotalPage(articlePage.getTotalPages());
+        if (!articlePage.hasContent()) return pageResponse;
+        for (Article article : articlePage.getContent())
+            pageResponse.getContent().add(convertToArticleResponse(article));
+        return pageResponse;
     }
 
     private String formatDate(Date date) {

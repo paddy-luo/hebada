@@ -52,6 +52,7 @@ public class ArticleRestController {
 
     @RequestMapping(value = URLs.ARTICLE_ID, method = RequestMethod.PUT)
     @ApiOperation(value = "update", httpMethod = HttpMethod.PUT, notes = "update article")
+
     public AjaxResponse update(@PathVariable long id, @RequestBody ArticleRequest request) {
         request.setId(id);
         articleService.update(articleConverter.convertToArticle(request));
@@ -70,7 +71,6 @@ public class ArticleRestController {
     public AjaxResponse getArticleList(@RequestBody ArticleSearchRequest request) {
         Page<Article> articles = articleService.findArticles(articleConverter.convertToArticleSearch(request),
             new PageRequest(request.getPageNumber(), request.getPageSize()));
-        return AjaxResponse.ok().withData(articles);
+        return AjaxResponse.ok().withData(articleConverter.convertToArticlePageResponse(articles, request.getPageNumber(), request.getPageSize()));
     }
-
 }

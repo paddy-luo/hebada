@@ -1,8 +1,8 @@
 package com.hebada.web.response;
 
-import com.google.common.collect.Maps;
+import com.google.common.collect.Lists;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * Created by paddy on 2017/9/14.
@@ -13,7 +13,8 @@ public class CatalogResponse {
     private String chineseName;
     private String englishName;
     private String templateName;
-    private final Map<Long, CatalogResponse> children = Maps.newHashMap();
+    private long parentId;
+    private final List<CatalogResponse> children = Lists.newArrayList();
 
     public long getId() {
         return id;
@@ -47,7 +48,15 @@ public class CatalogResponse {
         this.templateName = templateName;
     }
 
-    public Map<Long, CatalogResponse> getChildren() {
+    public long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(long parentId) {
+        this.parentId = parentId;
+    }
+
+    public List<CatalogResponse> getChildren() {
         return children;
     }
 }

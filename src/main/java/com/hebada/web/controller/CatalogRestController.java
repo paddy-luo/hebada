@@ -2,13 +2,16 @@ package com.hebada.web.controller;
 
 import com.hebada.converter.ArticleConverter;
 import com.hebada.converter.CatalogConverter;
+import com.hebada.converter.ProductConverter;
 import com.hebada.domain.Article;
 import com.hebada.domain.Catalog;
+import com.hebada.domain.Product;
 import com.hebada.entity.ArticleStatus;
 import com.hebada.entity.HttpMethod;
 import com.hebada.entity.URLs;
 import com.hebada.service.ArticleService;
 import com.hebada.service.CatalogService;
+import com.hebada.service.ProductService;
 import com.hebada.web.request.CatalogRequest;
 import com.hebada.web.response.AjaxResponse;
 import io.swagger.annotations.Api;
@@ -41,9 +44,13 @@ public class CatalogRestController {
     @Inject
     private ArticleService articleService;
     @Inject
+    private ProductService productService;
+    @Inject
     private CatalogConverter catalogConverter;
     @Inject
     private ArticleConverter articleConverter;
+    @Inject
+    private ProductConverter productConverter;
 
     // load all catalog
     @RequestMapping(value = URLs.CATALOG_LIST, method = RequestMethod.GET)
@@ -100,5 +107,13 @@ public class CatalogRestController {
         Page<Article> articles = articleService.findArticles(article, new PageRequest(0, 10));
         if (!articles.hasContent()) return AjaxResponse.ok();
         return AjaxResponse.ok().withData(articleConverter.convertToArticleResponse(articles.getContent().get(0)));
+    }
+
+    @RequestMapping(value = URLs.CATALOG_PRODUCT_LIST, method = RequestMethod.POST)
+    @ApiOperation(value = "list", notes = "list", httpMethod = HttpMethod.POST)
+    public AjaxResponse list(@PathVariable long catalogId, @RequestBody com.hebada.web.request.PageRequest request) {
+        Page<Product> productPage = productService.findAllByCatalogId(catalogId, request.getPageNumber(), request.getPageSize());
+        return AjaxResponse.ok().withData(productConverter.convertToProductResponse(productPage
+            , request.getPageNumber(), request.getPageSize()));
     }
 }
