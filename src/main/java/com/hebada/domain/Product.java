@@ -24,11 +24,17 @@ public class Product extends AbstractDomain {
     @Column(name = "catalogId")
     private long catalogId;
 
-    @Column(name = "imageUrl")
-    private String imageUrl;
+    @Column(name = "big_image_url")
+    private String bigImageUrl;
+
+    @Column(name = "small_image_url")
+    private String smallImageUrl;
 
     @Column(name = "content")
     private String content;
+
+    @Column(name = "recommended")
+    private boolean recommended;
 
     public String getContent() {
         return content;
@@ -70,11 +76,27 @@ public class Product extends AbstractDomain {
         this.catalogId = catalogId;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getBigImageUrl() {
+        return bigImageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setBigImageUrl(String bigImageUrl) {
+        this.bigImageUrl = bigImageUrl;
+    }
+
+    public String getSmallImageUrl() {
+        return smallImageUrl;
+    }
+
+    public void setSmallImageUrl(String smallImageUrl) {
+        this.smallImageUrl = smallImageUrl;
+    }
+
+    public boolean isRecommended() {
+        return recommended;
+    }
+
+    public void setRecommended(boolean recommended) {
+        this.recommended = recommended;
     }
 }

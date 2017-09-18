@@ -44,6 +44,9 @@ public class Article extends AbstractDomain {
     @Column(name = "publish_timed")
     private Date publishTimed;
 
+    @Column(name = "recommended")
+    private boolean recommended;
+
     public Article() {
     }
 
@@ -113,5 +116,13 @@ public class Article extends AbstractDomain {
 
     public void setKeyWords(String keyWords) {
         this.keyWords = keyWords;
+    }
+
+    public boolean isRecommended() {
+        return recommended;
+    }
+
+    public void setRecommended(boolean recommended) {
+        this.recommended = recommended;
     }
 }

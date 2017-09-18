@@ -31,7 +31,7 @@ public class ProductConverter {
         productDomain.setDescription(product.getDescription());
         productDomain.setContent(product.getContent());
         productDomain.setCatalogId(product.getCatalogId());
-        productDomain.setImageUrl(product.getImageUrl());
+        productDomain.setBigImageUrl(product.getBigImageUrl());
         productDomain.setUpdateTime(new Date());
         return productDomain;
     }
