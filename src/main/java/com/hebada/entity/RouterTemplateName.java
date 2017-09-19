@@ -9,15 +9,24 @@ import java.util.List;
  */
 public enum RouterTemplateName {
 
-    INDEX("index", "首页"),
+
     AR("ar", "通用文章模板"),
     TIME_LINE("timeline", "时间轴模板"),
     HONOR("honor", "荣誉列表模板"),
     TEAM("team", "团队列表模板"),
     NEWS("news", "新闻模板"),
-    PRODUCT("product", "产品模板"),
-    FEED_BOOK("feedbook", "招聘模板"),
-    RECRUITMENT("recruitment", "留言模板");
+
+
+    //todo: 模板内容要修改
+    INDEX("index", "首页"),
+    ABOUT("about", "简介"),
+    ARTICLE("article", "文章"),
+    PRODUCT("product", "产品"),
+    DOWNLOAD("download", "下载"),
+    PHOTO("photo", "图片"),
+    RECRUITMENT("recruitment", "招聘"),
+    FEED_BOOK("feedBook", "留言");
+
 
     private String name;
     private String description;

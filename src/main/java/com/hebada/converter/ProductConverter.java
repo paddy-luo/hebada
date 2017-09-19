@@ -4,10 +4,11 @@ import com.hebada.domain.Product;
 import com.hebada.web.request.ProductRequest;
 import com.hebada.web.response.PageResponse;
 import com.hebada.web.response.ProductResponse;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 
 import java.util.Date;
+
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by paddy on 2017/9/11.
@@ -21,14 +22,16 @@ public class ProductConverter {
         product.setCatalogId(request.getCatalogId());
         product.setDescription(request.getDescription());
         product.setContent(request.getContent());
+        product.setRecommended(request.isRecommended());
+        product.setSmallImageUrl(request.getSmallImageUrl());
         final Date now = new Date();
+        product.setCreatedTime(now);
         product.setUpdateTime(now);
         return product;
     }
 
     public Product convertToProduct(Product product, Product productDomain) {
         productDomain.setName(product.getName());
-        productDomain.setDescription(product.getDescription());
         productDomain.setContent(product.getContent());
         productDomain.setCatalogId(product.getCatalogId());
         productDomain.setBigImageUrl(product.getBigImageUrl());
@@ -41,9 +44,9 @@ public class ProductConverter {
         ProductResponse response = new ProductResponse();
         response.setId(product.getId());
         response.setName(product.getName());
-        response.setDescription(product.getDescription());
         response.setContent(product.getContent());
-        response.setImageUrl(product.getImageUrl());
+        response.setBigImageUrl(product.getBigImageUrl());
+        response.setSmallImageUrl(product.getSmallImageUrl());
         return response;
     }
 

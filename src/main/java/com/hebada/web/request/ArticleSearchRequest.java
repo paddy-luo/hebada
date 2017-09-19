@@ -5,7 +5,7 @@ import com.hebada.entity.ArticleStatus;
 /**
  * Created by paddy on 2017/9/16.
  */
-public class ArticleSearchRequest extends PageRequest {
+public class ArticleSearchRequest {
 
     private String title;
     private long catalogId;

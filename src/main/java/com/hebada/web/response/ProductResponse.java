@@ -3,36 +3,17 @@ package com.hebada.web.response;
 /**
  * Created by paddy on 2017/9/16.
  */
-public class ProductResponse {
+public class ProductResponse extends PhotoResponse {
 
-    private long id;
-    private String name;
-    private String description;
     private String content;
-    private String imageUrl;
+    private boolean recommended;
 
-    public long getId() {
-        return id;
+    public boolean isRecommended() {
+        return recommended;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setRecommended(boolean recommended) {
+        this.recommended = recommended;
     }
 
     public String getContent() {
@@ -42,12 +23,5 @@ public class ProductResponse {
     public void setContent(String content) {
         this.content = content;
     }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 }
+

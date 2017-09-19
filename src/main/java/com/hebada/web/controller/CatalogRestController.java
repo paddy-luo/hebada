@@ -5,17 +5,24 @@ import com.hebada.converter.CatalogConverter;
 import com.hebada.converter.ProductConverter;
 import com.hebada.domain.Article;
 import com.hebada.domain.Catalog;
+import com.hebada.domain.Photo;
 import com.hebada.domain.Product;
 import com.hebada.entity.ArticleStatus;
 import com.hebada.entity.HttpMethod;
 import com.hebada.entity.URLs;
 import com.hebada.service.ArticleService;
 import com.hebada.service.CatalogService;
+import com.hebada.service.PhotoService;
 import com.hebada.service.ProductService;
 import com.hebada.web.request.CatalogRequest;
 import com.hebada.web.response.AjaxResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -25,9 +32,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.inject.Inject;
-import java.util.List;
 
 /**
  * Created by paddy.luo on 2017/9/4.
@@ -51,6 +55,9 @@ public class CatalogRestController {
     private ArticleConverter articleConverter;
     @Inject
     private ProductConverter productConverter;
+    @Inject
+    private PhotoService photoService;
+
 
     // load all catalog
     @RequestMapping(value = URLs.CATALOG_LIST, method = RequestMethod.GET)
@@ -109,11 +116,20 @@ public class CatalogRestController {
         return AjaxResponse.ok().withData(articleConverter.convertToArticleResponse(articles.getContent().get(0)));
     }
 
+    // 产品模块的列表
     @RequestMapping(value = URLs.CATALOG_PRODUCT_LIST, method = RequestMethod.POST)
     @ApiOperation(value = "list", notes = "list", httpMethod = HttpMethod.POST)
-    public AjaxResponse list(@PathVariable long catalogId, @RequestBody com.hebada.web.request.PageRequest request) {
+    public AjaxResponse getProductList(@PathVariable long catalogId, @RequestBody com.hebada.web.request.PageRequest request) {
         Page<Product> productPage = productService.findAllByCatalogId(catalogId, request.getPageNumber(), request.getPageSize());
         return AjaxResponse.ok().withData(productConverter.convertToProductResponse(productPage
             , request.getPageNumber(), request.getPageSize()));
+    }
+
+    // 获取资质荣誉等 图片列表
+    @RequestMapping(value = URLs.CATALOG_PHOTO_LIST, method = RequestMethod.POST)
+    @ApiOperation(value = "photo list", notes = "photo list", httpMethod = HttpMethod.POST)
+    public AjaxResponse getPhotoList(@PathVariable long catalogId, @RequestBody com.hebada.web.request.PageRequest request) {
+        Page<Photo> photoPage = photoService.findPhotoListByCatalogId(catalogId, request.getPageNumber(), request.getPageSize());
+        return AjaxResponse.ok().withData(photoPage);
     }
 }

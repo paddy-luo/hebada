@@ -2,6 +2,9 @@ package com.hebada.domain;
 
 import com.hebada.entity.RouterTemplateName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,8 +12,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by paddy on 2017/9/3.

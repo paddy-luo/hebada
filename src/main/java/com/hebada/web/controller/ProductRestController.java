@@ -8,20 +8,21 @@ import com.hebada.web.request.ProductRequest;
 import com.hebada.web.response.AjaxResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import javax.inject.Inject;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
-
 /**
  * Created by paddy on 2017/9/10.
  */
 @RestController
 @RequestMapping(value = URLs.PRODUCT)
-@Api(basePath = URLs.PRODUCT, description = "product api")
+@Api(basePath = URLs.PHOTO, description = "photo api")
 public class ProductRestController {
 
     @Inject

@@ -10,6 +10,9 @@ import com.hebada.web.request.ArticleSearchRequest;
 import com.hebada.web.response.AjaxResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import javax.inject.Inject;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.inject.Inject;
 
 /**
  * Created by paddy on 2017/9/9.
@@ -68,7 +69,7 @@ public class ArticleRestController {
 
     @RequestMapping(value = URLs.ARTICLE_LIST, method = RequestMethod.POST)
     @ApiOperation(value = "getArticleList", httpMethod = HttpMethod.POST, notes = "getArticleListByCatalogId")
-    public AjaxResponse getArticleList(@RequestBody ArticleSearchRequest request) {
+    public AjaxResponse getArticleList(@RequestBody com.hebada.web.request.PageRequest<ArticleSearchRequest> request) {
         Page<Article> articles = articleService.findArticles(articleConverter.convertToArticleSearch(request),
             new PageRequest(request.getPageNumber(), request.getPageSize()));
         return AjaxResponse.ok().withData(articleConverter.convertToArticlePageResponse(articles, request.getPageNumber(), request.getPageSize()));

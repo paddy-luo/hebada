@@ -5,13 +5,17 @@ import com.hebada.entity.ArticleStatus;
 import com.hebada.utils.ImageUtils;
 import com.hebada.web.request.ArticleRequest;
 import com.hebada.web.request.ArticleSearchRequest;
+import com.hebada.web.request.PageRequest;
+import com.hebada.web.response.ArticleListResponse;
 import com.hebada.web.response.ArticleResponse;
 import com.hebada.web.response.PageResponse;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 /**
  * Created by paddy on 2017/9/9.
@@ -61,23 +65,35 @@ public class ArticleConverter {
         return response;
     }
 
-    public Article convertToArticleSearch(ArticleSearchRequest request) {
+    public Article convertToArticleSearch(PageRequest<ArticleSearchRequest> request) {
         Article articleQuery = new Article();
-        articleQuery.setTitle(request.getTitle());
-        articleQuery.setCatalogId(request.getCatalogId());
-        articleQuery.setStatus(request.getStatus());
+        articleQuery.setTitle(request.getParams().getTitle());
+        articleQuery.setCatalogId(request.getParams().getCatalogId());
+        articleQuery.setStatus(request.getParams().getStatus());
         return articleQuery;
     }
 
-    public PageResponse<ArticleResponse> convertToArticlePageResponse(Page<Article> articlePage, int currentPage, int pageSize) {
-        PageResponse<ArticleResponse> pageResponse = new PageResponse<ArticleResponse>();
+    public PageResponse<ArticleListResponse> convertToArticlePageResponse(Page<Article> articlePage, int currentPage, int pageSize) {
+        PageResponse<ArticleListResponse> pageResponse = new PageResponse<ArticleListResponse>();
         pageResponse.setPageSize(pageSize);
         pageResponse.setCurrentPage(currentPage);
         pageResponse.setTotalPage(articlePage.getTotalPages());
         if (!articlePage.hasContent()) return pageResponse;
         for (Article article : articlePage.getContent())
-            pageResponse.getContent().add(convertToArticleResponse(article));
+            pageResponse.getContent().add(convertToArticleListResponse(article));
         return pageResponse;
+    }
+
+    public ArticleListResponse convertToArticleListResponse(Article article) {
+        if (article == null) return null;
+        ArticleListResponse response = new ArticleListResponse();
+        response.setId(article.getId());
+        response.setTitle(article.getTitle());
+        response.setArticlePageImageUrl(ImageUtils.getImageUrlFirstFromHtml(article.getContent()));
+        String content = article.getContent();
+        if (StringUtils.hasLength(content))
+            response.setDescription(content.length() > 500 ? content.substring(0, 500) : content);
+        return response;
     }
 
     private String formatDate(Date date) {

@@ -2,6 +2,8 @@ package com.hebada.domain;
 
 import com.hebada.entity.ArticleStatus;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,7 +11,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import java.util.Date;
 
 /**
  * Created by paddy on 2017/9/8.
@@ -33,6 +34,8 @@ public class Article extends AbstractDomain {
     @Column(name = "author")
     private String author;
 
+    @Column(name = "article_page_image_url")
+    private String articlePageImageUrl;
     @Lob
     @Column(name = "content")
     private String content;
@@ -84,6 +87,14 @@ public class Article extends AbstractDomain {
 
     public void setCatalogId(long catalogId) {
         this.catalogId = catalogId;
+    }
+
+    public String getArticlePageImageUrl() {
+        return articlePageImageUrl;
+    }
+
+    public void setArticlePageImageUrl(String articlePageImageUrl) {
+        this.articlePageImageUrl = articlePageImageUrl;
     }
 
     public String getContent() {
