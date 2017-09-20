@@ -9,7 +9,7 @@ import javax.persistence.Id;
  * Created by paddy on 2017/9/6.
  */
 @Entity(name = "t_user")
-public class User extends AbstractDomain {
+public class User extends CreateOrUpdateDomain {
 
     @Id
     @GeneratedValue

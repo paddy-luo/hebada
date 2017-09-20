@@ -12,6 +12,7 @@ public class PageResponse<T> {
     private int pageSize;
     private int totalPage;
     private int currentPage;
+    private long total;
     private final List<T> content = Lists.newArrayList();
 
     public int getPageSize() {
@@ -40,5 +41,13 @@ public class PageResponse<T> {
 
     public List<T> getContent() {
         return content;
+    }
+
+    public long getTotal() {
+        return total;
+    }
+
+    public void setTotal(long total) {
+        this.total = total;
     }
 }

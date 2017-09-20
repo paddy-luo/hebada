@@ -9,13 +9,12 @@ import com.hebada.web.request.PageRequest;
 import com.hebada.web.response.ArticleListResponse;
 import com.hebada.web.response.ArticleResponse;
 import com.hebada.web.response.PageResponse;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by paddy on 2017/9/9.
@@ -67,6 +66,7 @@ public class ArticleConverter {
 
     public Article convertToArticleSearch(PageRequest<ArticleSearchRequest> request) {
         Article articleQuery = new Article();
+        if (request.getParams() == null) return articleQuery;
         articleQuery.setTitle(request.getParams().getTitle());
         articleQuery.setCatalogId(request.getParams().getCatalogId());
         articleQuery.setStatus(request.getParams().getStatus());
@@ -77,6 +77,7 @@ public class ArticleConverter {
         PageResponse<ArticleListResponse> pageResponse = new PageResponse<ArticleListResponse>();
         pageResponse.setPageSize(pageSize);
         pageResponse.setCurrentPage(currentPage);
+        pageResponse.setTotal(articlePage.getTotalElements());
         pageResponse.setTotalPage(articlePage.getTotalPages());
         if (!articlePage.hasContent()) return pageResponse;
         for (Article article : articlePage.getContent())
@@ -89,10 +90,14 @@ public class ArticleConverter {
         ArticleListResponse response = new ArticleListResponse();
         response.setId(article.getId());
         response.setTitle(article.getTitle());
-        response.setArticlePageImageUrl(ImageUtils.getImageUrlFirstFromHtml(article.getContent()));
+        if (!StringUtils.isEmpty(article.getArticlePageImageUrl()))
+            response.setArticlePageImageUrl(article.getArticlePageImageUrl());
+        else
+            response.setArticlePageImageUrl(ImageUtils.getImageUrlFirstFromHtml(article.getContent()));
         String content = article.getContent();
         if (StringUtils.hasLength(content))
             response.setDescription(content.length() > 500 ? content.substring(0, 500) : content);
+        response.setPublishTime(formatDate(article.getPublishTimed()));
         return response;
     }
 

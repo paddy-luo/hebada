@@ -3,12 +3,12 @@ package com.hebada.converter;
 import com.hebada.domain.Product;
 import com.hebada.web.request.ProductRequest;
 import com.hebada.web.response.PageResponse;
+import com.hebada.web.response.PhotoResponse;
 import com.hebada.web.response.ProductResponse;
-
-import java.util.Date;
-
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 /**
  * Created by paddy on 2017/9/11.
@@ -22,8 +22,8 @@ public class ProductConverter {
         product.setCatalogId(request.getCatalogId());
         product.setDescription(request.getDescription());
         product.setContent(request.getContent());
+        product.setDescription(request.getDescription());
         product.setRecommended(request.isRecommended());
-        product.setSmallImageUrl(request.getSmallImageUrl());
         final Date now = new Date();
         product.setCreatedTime(now);
         product.setUpdateTime(now);
@@ -34,7 +34,7 @@ public class ProductConverter {
         productDomain.setName(product.getName());
         productDomain.setContent(product.getContent());
         productDomain.setCatalogId(product.getCatalogId());
-        productDomain.setBigImageUrl(product.getBigImageUrl());
+        productDomain.setDescription(product.getDescription());
         productDomain.setUpdateTime(new Date());
         return productDomain;
     }
@@ -45,20 +45,27 @@ public class ProductConverter {
         response.setId(product.getId());
         response.setName(product.getName());
         response.setContent(product.getContent());
-        response.setBigImageUrl(product.getBigImageUrl());
-        response.setSmallImageUrl(product.getSmallImageUrl());
         return response;
     }
 
-    public PageResponse<ProductResponse> convertToProductResponse(Page<Product> productPage, int currentPage, int pageSize) {
-        PageResponse<ProductResponse> pageResponse = new PageResponse<ProductResponse>();
+    public PageResponse<PhotoResponse> convertToProductResponse(Page<Product> productPage, int currentPage, int pageSize) {
+        PageResponse<PhotoResponse> pageResponse = new PageResponse<PhotoResponse>();
         pageResponse.setCurrentPage(currentPage);
         pageResponse.setTotalPage(productPage.getTotalPages());
         pageResponse.setPageSize(pageSize);
+        pageResponse.setTotal(productPage.getTotalElements());
         if (!productPage.hasContent()) return pageResponse;
         for (Product product : productPage.getContent()) {
-            pageResponse.getContent().add(convertToProductResponse(product));
+            pageResponse.getContent().add(convertToPhotoResponse(product));
         }
         return pageResponse;
+    }
+
+    private PhotoResponse convertToPhotoResponse(Product product) {
+        PhotoResponse response = new PhotoResponse();
+        response.setId(product.getId());
+        response.setDescription(response.getDescription());
+        response.setName(product.getDescription());
+        return response;
     }
 }

@@ -9,11 +9,8 @@ import com.hebada.web.request.PhotoRequest;
 import com.hebada.web.response.AjaxResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by paddy on 2017/9/7.
@@ -45,16 +45,22 @@ public class PhotoRestController {
         return AjaxResponse.ok().withData(upload);
     }
 
+    @RequestMapping(value = URLs.PRODUCT_ID, method = RequestMethod.GET)
+    @ApiOperation(value = "save", notes = "save image", httpMethod = HttpMethod.GET)
+    public AjaxResponse get(@PathVariable long id) {
+        return AjaxResponse.ok().withData(photoService.get(id));
+    }
+
     @RequestMapping(value = URLs.DEFAULT, method = RequestMethod.POST)
     @ApiOperation(value = "save", notes = "save image", httpMethod = HttpMethod.POST)
-    public AjaxResponse save(PhotoRequest request) {
+    public AjaxResponse save(@Validated @RequestBody PhotoRequest request) {
         boolean save = photoService.save(photoConverter.convertToPhoto(request));
         if (save) return AjaxResponse.ok();
         return AjaxResponse.error();
     }
 
-    @RequestMapping(value = URLs.PHOTO_ID, method = RequestMethod.POST)
-    @ApiOperation(value = "delete", notes = "delete image", httpMethod = HttpMethod.POST)
+    @RequestMapping(value = URLs.PHOTO_ID, method = RequestMethod.DELETE)
+    @ApiOperation(value = "delete", notes = "delete image", httpMethod = HttpMethod.DELETE)
     public AjaxResponse delete(@PathVariable long id) {
         photoService.delete(id);
         return AjaxResponse.ok();
@@ -62,7 +68,7 @@ public class PhotoRestController {
 
     @RequestMapping(value = URLs.PHOTO_ID, method = RequestMethod.POST)
     @ApiOperation(value = "delete", notes = "delete image", httpMethod = HttpMethod.POST)
-    public AjaxResponse delete(@PathVariable long id, @RequestBody PhotoRequest request) {
+    public AjaxResponse update(@PathVariable long id, @Validated @RequestBody PhotoRequest request) {
         request.setId(id);
         photoService.update(photoConverter.convertToPhoto(request));
         return AjaxResponse.ok();

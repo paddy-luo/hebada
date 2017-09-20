@@ -9,7 +9,7 @@ import javax.persistence.Id;
  * Created by paddy on 2017/9/10.
  */
 @Entity(name = "t_certification")
-public class Certification extends AbstractDomain {
+public class Certification extends CreateOrUpdateDomain {
 
     @Id
     @GeneratedValue

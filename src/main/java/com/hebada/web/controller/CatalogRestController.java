@@ -2,6 +2,7 @@ package com.hebada.web.controller;
 
 import com.hebada.converter.ArticleConverter;
 import com.hebada.converter.CatalogConverter;
+import com.hebada.converter.PhotoConverter;
 import com.hebada.converter.ProductConverter;
 import com.hebada.domain.Article;
 import com.hebada.domain.Catalog;
@@ -18,11 +19,6 @@ import com.hebada.web.request.CatalogRequest;
 import com.hebada.web.response.AjaxResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
-import java.util.List;
-
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -32,6 +28,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.inject.Inject;
+import java.util.List;
 
 /**
  * Created by paddy.luo on 2017/9/4.
@@ -57,7 +56,8 @@ public class CatalogRestController {
     private ProductConverter productConverter;
     @Inject
     private PhotoService photoService;
-
+    @Inject
+    private PhotoConverter photoConverter;
 
     // load all catalog
     @RequestMapping(value = URLs.CATALOG_LIST, method = RequestMethod.GET)
@@ -117,6 +117,7 @@ public class CatalogRestController {
     }
 
     // 产品模块的列表
+    //todo: 产品表和产品图片表分开， 这边要做调整
     @RequestMapping(value = URLs.CATALOG_PRODUCT_LIST, method = RequestMethod.POST)
     @ApiOperation(value = "list", notes = "list", httpMethod = HttpMethod.POST)
     public AjaxResponse getProductList(@PathVariable long catalogId, @RequestBody com.hebada.web.request.PageRequest request) {
@@ -130,6 +131,7 @@ public class CatalogRestController {
     @ApiOperation(value = "photo list", notes = "photo list", httpMethod = HttpMethod.POST)
     public AjaxResponse getPhotoList(@PathVariable long catalogId, @RequestBody com.hebada.web.request.PageRequest request) {
         Page<Photo> photoPage = photoService.findPhotoListByCatalogId(catalogId, request.getPageNumber(), request.getPageSize());
-        return AjaxResponse.ok().withData(photoPage);
+        return AjaxResponse.ok().withData(photoConverter.convertToPagePhotoResponse(photoPage,
+            request.getPageNumber(), request.getPageSize()));
     }
 }

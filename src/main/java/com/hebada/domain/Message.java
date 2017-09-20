@@ -9,7 +9,7 @@ import javax.persistence.Id;
  * Created by paddy on 2017/9/16.
  */
 @Entity(name = "t_message")
-public class Message {
+public class Message extends CreateOrUpdateDomain {
 
     @Id
     @GeneratedValue

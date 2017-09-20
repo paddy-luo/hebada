@@ -1,6 +1,9 @@
 package com.hebada.utils;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.io.FileUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,10 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.io.FileUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created by paddy on 2017/9/14.
@@ -60,7 +59,7 @@ public class ImageUtils {
         return fileDir + fileSaveName;
     }
 
-    private static String getRandomString(int length) {
+    public static String getRandomString(int length) {
         String KeyString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         StringBuffer sb = new StringBuffer();
         int len = KeyString.length();

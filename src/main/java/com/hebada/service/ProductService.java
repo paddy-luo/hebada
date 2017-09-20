@@ -1,14 +1,19 @@
 package com.hebada.service;
 
+import com.hebada.converter.PhotoConverter;
 import com.hebada.converter.ProductConverter;
+import com.hebada.domain.Photo;
 import com.hebada.domain.Product;
+import com.hebada.repository.PhotoJpaRepository;
 import com.hebada.repository.ProductJpaRepository;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Created by paddy on 2017/9/10.
@@ -19,17 +24,23 @@ public class ProductService {
     @Inject
     private ProductJpaRepository productJpaRepository;
     @Inject
+    private PhotoJpaRepository photoJpaRepository;
+    @Inject
     private ProductConverter productConverter;
+    @Inject
+    private PhotoConverter photoConverter;
 
     public Product get(long id) {
         return productJpaRepository.findOne(id);
     }
 
     @Transactional
-    public boolean save(Product product) {
+    public void save(Product product, List<String> bigImageUrls, List<String> smallImageUrls) {
         productJpaRepository.save(product);
-        if (product.getId() > 0) return true;
-        return false;
+        List<Photo> photoList = photoConverter.convertToProductPhotoList(product.getId(),
+            product.getCatalogId(), bigImageUrls, smallImageUrls);
+        if (CollectionUtils.isEmpty(photoList)) return;
+        photoJpaRepository.save(photoList);
     }
 
     @Transactional

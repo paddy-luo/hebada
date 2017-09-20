@@ -9,7 +9,7 @@ import javax.persistence.Id;
  * Created by paddy.luo on 2017/9/19.
  */
 @Entity(name = "t_photo")
-public class Photo extends AbstractDomain {
+public class Photo extends CreateOrUpdateDomain {
 
     @Id
     @GeneratedValue
@@ -29,6 +29,9 @@ public class Photo extends AbstractDomain {
 
     @Column(name = "catalogId")
     protected long catalogId;
+
+    @Column(name = "product_id")
+    private long productId;
 
     public long getId() {
         return id;
@@ -76,5 +79,13 @@ public class Photo extends AbstractDomain {
 
     public void setCatalogId(long catalogId) {
         this.catalogId = catalogId;
+    }
+
+    public long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(long productId) {
+        this.productId = productId;
     }
 }

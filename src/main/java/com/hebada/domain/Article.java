@@ -2,8 +2,6 @@ package com.hebada.domain;
 
 import com.hebada.entity.ArticleStatus;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,12 +9,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import java.util.Date;
 
 /**
  * Created by paddy on 2017/9/8.
  */
 @Entity(name = "t_article")
-public class Article extends AbstractDomain {
+public class Article extends CreateOrUpdateDomain {
 
     @Id
     @GeneratedValue

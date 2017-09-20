@@ -9,6 +9,7 @@ public class ArticleListResponse {
     private String title;
     private String articlePageImageUrl;
     private String description;
+    private String publishTime;
 
     public long getId() {
         return id;
@@ -40,5 +41,13 @@ public class ArticleListResponse {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPublishTime() {
+        return publishTime;
+    }
+
+    public void setPublishTime(String publishTime) {
+        this.publishTime = publishTime;
     }
 }

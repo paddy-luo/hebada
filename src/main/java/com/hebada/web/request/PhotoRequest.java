@@ -1,12 +1,17 @@
 package com.hebada.web.request;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by paddy.luo on 2017/9/19.
  */
 public class PhotoRequest {
 
     protected long id;
+    @NotNull(message = "photo name is null")
     protected String name;
+    private long productId;
+    @NotNull(message = "big image url is not null")
     protected String bigImageUrl;
     protected String smallImageUrl;
     protected String description;
@@ -58,5 +63,13 @@ public class PhotoRequest {
 
     public void setCatalogId(long catalogId) {
         this.catalogId = catalogId;
+    }
+
+    public long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(long productId) {
+        this.productId = productId;
     }
 }

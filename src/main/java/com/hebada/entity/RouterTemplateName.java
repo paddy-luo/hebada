@@ -16,7 +16,6 @@ public enum RouterTemplateName {
     TEAM("team", "团队列表模板"),
     NEWS("news", "新闻模板"),
 
-
     //todo: 模板内容要修改
     INDEX("index", "首页"),
     ABOUT("about", "简介"),

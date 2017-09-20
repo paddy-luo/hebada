@@ -3,13 +3,12 @@ package com.hebada.service;
 import com.hebada.converter.PhotoConverter;
 import com.hebada.domain.Photo;
 import com.hebada.repository.PhotoJpaRepository;
-
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 /**
  * Created by paddy.luo on 2017/9/19.
@@ -23,7 +22,7 @@ public class PhotoService {
     private PhotoConverter photoConverter;
 
     public Photo get(long id) {
-        return photoJpaRepository.getOne(id);
+        return photoJpaRepository.findOne(id);
     }
 
     @Transactional
