@@ -3,12 +3,15 @@ package com.hebada.service;
 import com.hebada.converter.PhotoConverter;
 import com.hebada.domain.Photo;
 import com.hebada.repository.PhotoJpaRepository;
+
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 
 /**
  * Created by paddy.luo on 2017/9/19.
@@ -44,5 +47,9 @@ public class PhotoService {
 
     public Page<Photo> findPhotoListByCatalogId(long catalogId, int currentPage, int pageSize) {
         return photoJpaRepository.findByCatalogId(catalogId, new PageRequest(currentPage, pageSize));
+    }
+
+    public List<Photo> findPhotoListByProductId(long productId) {
+        return photoJpaRepository.findByProductIdOrderByIdAsc(productId);
     }
 }

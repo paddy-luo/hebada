@@ -2,6 +2,8 @@ package com.hebada.repository;
 
 import com.hebada.domain.Photo;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +14,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface PhotoJpaRepository extends JpaRepository<Photo, Long> {
 
     Page<Photo> findByCatalogId(long catalogId, Pageable pageable);
+
+    List<Photo> findByProductIdOrderByIdAsc(long productId);
 }

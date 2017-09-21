@@ -7,7 +7,7 @@ public class ProductListResponse {
 
     private long id;
     private String name;
-    private String productImageUrls;
+    private String productImageUrl;
     private String description;
 
     public long getId() {
@@ -26,12 +26,12 @@ public class ProductListResponse {
         this.name = name;
     }
 
-    public String getProductImageUrls() {
-        return productImageUrls;
+    public String getProductImageUrl() {
+        return productImageUrl;
     }
 
-    public void setProductImageUrls(String productImageUrls) {
-        this.productImageUrls = productImageUrls;
+    public void setProductImageUrl(String productImageUrl) {
+        this.productImageUrl = productImageUrl;
     }
 
     public String getDescription() {

@@ -15,10 +15,16 @@ import com.hebada.service.ArticleService;
 import com.hebada.service.CatalogService;
 import com.hebada.service.PhotoService;
 import com.hebada.service.ProductService;
+import com.hebada.web.interceptor.LoginRequired;
 import com.hebada.web.request.CatalogRequest;
 import com.hebada.web.response.AjaxResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -29,15 +35,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
-import java.util.List;
-
 /**
  * Created by paddy.luo on 2017/9/4.
  */
 @RestController
 @RequestMapping(value = URLs.CATALOG)
 @Api(value = "catalog api", basePath = URLs.CATALOG, description = "catalog api")
+@LoginRequired
 public class CatalogRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CatalogRestController.class);
@@ -62,6 +66,7 @@ public class CatalogRestController {
     // load all catalog
     @RequestMapping(value = URLs.CATALOG_LIST, method = RequestMethod.GET)
     @ApiOperation(value = "getCatalogList", httpMethod = HttpMethod.GET, notes = "catalog list")
+    @LoginRequired(required = false)
     public AjaxResponse getCatalogList() {
         List<Catalog> catalogList = catalogConverter.convertToCatalogList(catalogService.findAll());
         return AjaxResponse.ok().withData(catalogConverter.convertToCatalogResponse(catalogList));
@@ -78,6 +83,7 @@ public class CatalogRestController {
 
     @RequestMapping(value = URLs.CATALOG_ID, method = RequestMethod.GET)
     @ApiOperation(value = "get", httpMethod = HttpMethod.GET, notes = "findOne catalog")
+    @LoginRequired(required = false)
     public AjaxResponse get(@PathVariable long id) {
         Catalog catalog = catalogService.get(id);
         return AjaxResponse.ok().withData(catalogConverter.convertToCatalogResponse(catalog));
@@ -101,6 +107,7 @@ public class CatalogRestController {
 
     @RequestMapping(value = URLs.CATALOG_CHILDREN_LIST, method = RequestMethod.GET)
     @ApiOperation(value = "getChildrenList", httpMethod = HttpMethod.GET, notes = "get catalog childrenList")
+    @LoginRequired(required = false)
     public AjaxResponse getChildrenList(@PathVariable(name = "id") long parentId) {
         List<Catalog> catalogList = catalogConverter.convertToCatalogList(catalogService.findAllByParentId(parentId));
         return AjaxResponse.ok().withData(catalogConverter.convertToCatalogResponse(catalogList));
@@ -108,6 +115,7 @@ public class CatalogRestController {
 
     @RequestMapping(value = URLs.CATALOG_LATEST_ARTICLE, method = RequestMethod.GET)
     @ApiOperation(value = "getLatestArticle", httpMethod = HttpMethod.GET, notes = "getLatestArticle")
+    @LoginRequired(required = false)
     public AjaxResponse getLatestArticle(@PathVariable long catalogId) {
         Article article = new Article(catalogId);
         article.setStatus(ArticleStatus.PUBLISHED);
@@ -120,15 +128,17 @@ public class CatalogRestController {
     //todo: 产品表和产品图片表分开， 这边要做调整
     @RequestMapping(value = URLs.CATALOG_PRODUCT_LIST, method = RequestMethod.POST)
     @ApiOperation(value = "list", notes = "list", httpMethod = HttpMethod.POST)
+    @LoginRequired(required = false)
     public AjaxResponse getProductList(@PathVariable long catalogId, @RequestBody com.hebada.web.request.PageRequest request) {
         Page<Product> productPage = productService.findAllByCatalogId(catalogId, request.getPageNumber(), request.getPageSize());
-        return AjaxResponse.ok().withData(productConverter.convertToProductResponse(productPage
+        return AjaxResponse.ok().withData(productConverter.convertToProductListResponse(productPage
             , request.getPageNumber(), request.getPageSize()));
     }
 
     // 获取资质荣誉等 图片列表
     @RequestMapping(value = URLs.CATALOG_PHOTO_LIST, method = RequestMethod.POST)
     @ApiOperation(value = "photo list", notes = "photo list", httpMethod = HttpMethod.POST)
+    @LoginRequired(required = false)
     public AjaxResponse getPhotoList(@PathVariable long catalogId, @RequestBody com.hebada.web.request.PageRequest request) {
         Page<Photo> photoPage = photoService.findPhotoListByCatalogId(catalogId, request.getPageNumber(), request.getPageSize());
         return AjaxResponse.ok().withData(photoConverter.convertToPagePhotoResponse(photoPage,

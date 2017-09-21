@@ -3,12 +3,16 @@ package com.hebada.converter;
 import com.hebada.domain.Product;
 import com.hebada.web.request.ProductRequest;
 import com.hebada.web.response.PageResponse;
-import com.hebada.web.response.PhotoResponse;
+import com.hebada.web.response.ProductListResponse;
 import com.hebada.web.response.ProductResponse;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by paddy on 2017/9/11.
@@ -39,33 +43,39 @@ public class ProductConverter {
         return productDomain;
     }
 
-    public ProductResponse convertToProductResponse(Product product) {
+    public ProductResponse convertToProductResponse(Product product, List<Map<String, String>> bigImageUrls) {
         if (product == null) return null;
         ProductResponse response = new ProductResponse();
         response.setId(product.getId());
         response.setName(product.getName());
+        response.setAlcoholicStrength(product.getAlcoholicStrength());
+        response.setStandard(product.getStandard());
+        response.setDescription(product.getDescription());
         response.setContent(product.getContent());
+        response.setRecommended(product.isRecommended());
+        if (CollectionUtils.isNotEmpty(bigImageUrls))
+            response.getProductImageUrls().addAll(bigImageUrls);
         return response;
     }
 
-    public PageResponse<PhotoResponse> convertToProductResponse(Page<Product> productPage, int currentPage, int pageSize) {
-        PageResponse<PhotoResponse> pageResponse = new PageResponse<PhotoResponse>();
+    public PageResponse<ProductListResponse> convertToProductListResponse(Page<Product> productPage, int currentPage, int pageSize) {
+        PageResponse<ProductListResponse> pageResponse = new PageResponse<ProductListResponse>();
         pageResponse.setCurrentPage(currentPage);
         pageResponse.setTotalPage(productPage.getTotalPages());
         pageResponse.setPageSize(pageSize);
         pageResponse.setTotal(productPage.getTotalElements());
         if (!productPage.hasContent()) return pageResponse;
         for (Product product : productPage.getContent()) {
-            pageResponse.getContent().add(convertToPhotoResponse(product));
+            pageResponse.getContent().add(convertToProductListResponse(product));
         }
         return pageResponse;
     }
 
-    private PhotoResponse convertToPhotoResponse(Product product) {
-        PhotoResponse response = new PhotoResponse();
-        response.setId(product.getId());
-        response.setDescription(response.getDescription());
-        response.setName(product.getDescription());
-        return response;
+    private ProductListResponse convertToProductListResponse(Product product) {
+        ProductListResponse productListResponse = new ProductListResponse();
+        productListResponse.setId(product.getId());
+        productListResponse.setName(product.getName());
+        productListResponse.setDescription(product.getDescription());
+        return productListResponse;
     }
 }

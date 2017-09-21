@@ -1,10 +1,6 @@
 package com.hebada.web.request;
 
-import com.google.common.collect.Lists;
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  * Created by paddy on 2017/9/10.
@@ -20,11 +16,6 @@ public class ProductRequest {
     private String content;
     private boolean recommended;
     private long catalogId;
-
-    @NotEmpty(message = "product image is null")
-    private final List<String> bigImageUrls = Lists.newArrayList();
-    @NotEmpty(message = "product image is null")
-    private final List<String> smallImageUrls = Lists.newArrayList();
 
     public long getId() {
         return id;
@@ -90,11 +81,4 @@ public class ProductRequest {
         this.catalogId = catalogId;
     }
 
-    public List<String> getBigImageUrls() {
-        return bigImageUrls;
-    }
-
-    public List<String> getSmallImageUrls() {
-        return smallImageUrls;
-    }
 }

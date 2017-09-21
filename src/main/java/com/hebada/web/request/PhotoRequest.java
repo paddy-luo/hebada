@@ -7,15 +7,15 @@ import javax.validation.constraints.NotNull;
  */
 public class PhotoRequest {
 
-    protected long id;
+    private long id;
     @NotNull(message = "photo name is null")
-    protected String name;
+    private String name;
     private long productId;
     @NotNull(message = "big image url is not null")
-    protected String bigImageUrl;
-    protected String smallImageUrl;
-    protected String description;
-    protected long catalogId;
+    private String bigImageUrl;
+    private String smallImageUrl;
+    private String description;
+    private long catalogId;
 
     public long getId() {
         return id;

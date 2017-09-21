@@ -1,17 +1,19 @@
 package com.hebada.converter;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.hebada.domain.Photo;
-import com.hebada.utils.ImageUtils;
 import com.hebada.web.request.PhotoRequest;
 import com.hebada.web.response.PageResponse;
 import com.hebada.web.response.PhotoResponse;
-import org.apache.commons.collections.CollectionUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by paddy.luo on 2017/9/19.
@@ -23,6 +25,7 @@ public class PhotoConverter {
         Photo photo = new Photo();
         photo.setName(request.getName());
         photo.setDescription(request.getDescription());
+        photo.setProductId(request.getProductId());
         photo.setCatalogId(request.getCatalogId());
         photo.setSmallImageUrl(request.getSmallImageUrl());
         photo.setBigImageUrl(request.getBigImageUrl());
@@ -34,6 +37,7 @@ public class PhotoConverter {
 
     public Photo convertToPhoto(Photo photoDomain, Photo photo) {
         photoDomain.setName(photo.getName());
+        photoDomain.setProductId(photo.getProductId());
         photoDomain.setCatalogId(photo.getCatalogId());
         photoDomain.setBigImageUrl(photo.getBigImageUrl());
         photoDomain.setSmallImageUrl(photo.getSmallImageUrl());
@@ -66,20 +70,15 @@ public class PhotoConverter {
         return response;
     }
 
-    public List<Photo> convertToProductPhotoList(long productId, long catalogId, List<String> bigImageUrls, List<String> smallImageUrls) {
-        if (CollectionUtils.isEmpty(bigImageUrls)) return null;
-        List<Photo> photoList = Lists.newArrayList();
-        for (int i = 0; i < bigImageUrls.size(); i++) {
-            Photo photo = new Photo();
-            photo.setCatalogId(catalogId);
-            photo.setProductId(productId);
-            photo.setName(ImageUtils.getRandomString(5));
-            photo.setBigImageUrl(bigImageUrls.get(i));
-            if (CollectionUtils.isNotEmpty(smallImageUrls) && smallImageUrls.get(i) != null)
-                photo.setSmallImageUrl(smallImageUrls.get(i));
-            photoList.add(photo);
+    public List<Map<String, String>> convertToProductImageUrls(List<Photo> photos) {
+        if (CollectionUtils.isEmpty(photos)) return null;
+        List<Map<String, String>> imageUrls = Lists.newArrayList();
+        for (Photo photo : photos) {
+            Map<String, String> imageMap = Maps.newHashMap();
+            imageMap.put("bigImageUrl", photo.getBigImageUrl());
+            imageMap.put("smallImageUrl", photo.getSmallImageUrl());
+            imageUrls.add(imageMap);
         }
-        return photoList;
+        return imageUrls;
     }
-
 }

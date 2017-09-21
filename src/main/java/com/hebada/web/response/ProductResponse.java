@@ -3,6 +3,7 @@ package com.hebada.web.response;
 import com.google.common.collect.Lists;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by paddy on 2017/9/16.
@@ -17,7 +18,7 @@ public class ProductResponse {
     private String content;
     private boolean recommended;
     private long catalogId;
-    private final List<PhotoResponse> productImageUrls = Lists.newArrayList();
+    private final List<Map<String, String>> productImageUrls = Lists.newArrayList();
 
     public long getId() {
         return id;
@@ -83,7 +84,7 @@ public class ProductResponse {
         this.catalogId = catalogId;
     }
 
-    public List<PhotoResponse> getProductImageUrls() {
+    public List<Map<String, String>> getProductImageUrls() {
         return productImageUrls;
     }
 }
