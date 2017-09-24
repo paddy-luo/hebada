@@ -1,6 +1,9 @@
 package com.hebada.domain;
 
+import com.google.common.collect.Lists;
 import com.hebada.entity.RouterTemplateName;
+
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,8 +12,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by paddy on 2017/9/3.
@@ -29,14 +30,14 @@ public class Catalog extends CreateOrUpdateDomain {
     private String englishName;
 
     @Column(name = "parent_id")
-    private Long parentId;
+    private long parentId;
 
     @Column(name = "t_template_name")
     @Enumerated(EnumType.STRING)
     private RouterTemplateName templateName;
 
     @Transient
-    private final List<Catalog> children = new ArrayList<Catalog>();
+    private final List<Catalog> children = Lists.newArrayList();
 
     public Catalog() {
     }

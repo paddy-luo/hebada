@@ -57,8 +57,7 @@ public class ArticleRestController {
     @RequestMapping(value = URLs.ARTICLE_ID, method = RequestMethod.PUT)
     @ApiOperation(value = "update", httpMethod = HttpMethod.PUT, notes = "update article")
     public AjaxResponse update(@PathVariable long id, @RequestBody ArticleRequest request) {
-        request.setId(id);
-        articleService.update(articleConverter.convertToArticle(request));
+        articleService.update(id, articleConverter.convertToArticle(request));
         return AjaxResponse.ok();
     }
 

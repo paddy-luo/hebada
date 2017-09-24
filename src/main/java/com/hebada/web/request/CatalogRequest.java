@@ -1,7 +1,5 @@
 package com.hebada.web.request;
 
-import com.hebada.entity.RouterTemplateName;
-
 /**
  * Created by paddy on 2017/9/9.
  */
@@ -11,7 +9,7 @@ public class CatalogRequest {
     private String chineseName;
     private String englishName;
     private Long parentId;
-    private RouterTemplateName templateName;
+    private String templateName;
 
     public long getId() {
         return id;
@@ -45,11 +43,11 @@ public class CatalogRequest {
         this.parentId = parentId;
     }
 
-    public RouterTemplateName getTemplateName() {
+    public String getTemplateName() {
         return templateName;
     }
 
-    public void setTemplateName(RouterTemplateName templateName) {
+    public void setTemplateName(String templateName) {
         this.templateName = templateName;
     }
 }

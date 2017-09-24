@@ -25,12 +25,14 @@ public class ArticleConverter {
 
     public Article convertToArticle(ArticleRequest request) {
         final Article article = new Article();
-        article.setId(request.getId());
         article.setTitle(request.getTitle());
         article.setContent(request.getContent());
         article.setKeyWords(request.getKeyWords());
         article.setCatalogId(request.getCatalogId());
+        article.setArticlePageImageUrl(request.getArticlePageImageUrl());
+        article.setAuthor("admin");
         article.setStatus(request.getStatus());
+        article.setRecommended(request.isRecommended());
         Date now = new Date();
         article.setCreatedTime(now);
         article.setUpdateTime(now);
@@ -44,8 +46,8 @@ public class ArticleConverter {
         articleDomain.setCatalogId(article.getCatalogId());
         articleDomain.setContent(article.getContent());
         articleDomain.setTitle(article.getTitle());
-        articleDomain.setPublishTimed(article.getPublishTimed());
         articleDomain.setStatus(article.getStatus());
+        articleDomain.setRecommended(article.isRecommended());
         articleDomain.setUpdateTime(new Date());
         return articleDomain;
     }
@@ -56,10 +58,14 @@ public class ArticleConverter {
         response.setId(article.getId());
         response.setKeyWords(article.getKeyWords());
         response.setTitle(article.getTitle());
-        response.setArticlePageImageUrl(ImageUtils.getImageUrlFirstFromHtml(article.getContent()));
+        if (!StringUtils.isEmpty(article.getArticlePageImageUrl()))
+            response.setArticlePageImageUrl(article.getArticlePageImageUrl());
+        else
+            response.setArticlePageImageUrl(ImageUtils.getImageUrlFirstFromHtml(article.getContent()));
         response.setContent(article.getContent());
         response.setAuthor(article.getAuthor());
         response.setStatus(article.getStatus());
+        response.setRecommended(article.isRecommended());
         response.setCreateTime(formatDate(article.getCreatedTime()));
         response.setPublishTime(formatDate(article.getPublishTimed()));
         return response;
@@ -91,6 +97,7 @@ public class ArticleConverter {
         ArticleListResponse response = new ArticleListResponse();
         response.setId(article.getId());
         response.setTitle(article.getTitle());
+        response.setAuthor(article.getAuthor());
         if (!StringUtils.isEmpty(article.getArticlePageImageUrl()))
             response.setArticlePageImageUrl(article.getArticlePageImageUrl());
         else

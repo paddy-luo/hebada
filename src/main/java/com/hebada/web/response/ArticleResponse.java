@@ -1,6 +1,7 @@
 package com.hebada.web.response;
 
 import com.hebada.entity.ArticleStatus;
+
 import org.springframework.util.StringUtils;
 
 ;
@@ -18,6 +19,7 @@ public class ArticleResponse {
     private String content;
     private String author;
     private ArticleStatus status;
+    private boolean recommended;
     private String createTime;
     private String publishTime;
 
@@ -92,5 +94,13 @@ public class ArticleResponse {
 
     public void setPublishTime(String publishTime) {
         this.publishTime = publishTime;
+    }
+
+    public boolean isRecommended() {
+        return recommended;
+    }
+
+    public void setRecommended(boolean recommended) {
+        this.recommended = recommended;
     }
 }

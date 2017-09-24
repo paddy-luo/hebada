@@ -7,13 +7,14 @@ import com.hebada.web.request.ProductRequest;
 import com.hebada.web.response.PageResponse;
 import com.hebada.web.response.ProductListResponse;
 import com.hebada.web.response.ProductResponse;
-import org.apache.commons.collections.CollectionUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by paddy on 2017/9/11.
@@ -89,6 +90,8 @@ public class ProductConverter {
         ProductListResponse productListResponse = new ProductListResponse();
         productListResponse.setId(product.getId());
         productListResponse.setName(product.getName());
+        productListResponse.setAlcoholicStrength(product.getAlcoholicStrength());
+        productListResponse.setStandard(product.getStandard());
         productListResponse.setDescription(product.getDescription());
         if (photoMap == null || photoMap.size() == 0) return productListResponse;
         Photo photo = photoMap.get(product.getId());

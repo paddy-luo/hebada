@@ -20,6 +20,12 @@ import com.hebada.web.request.CatalogRequest;
 import com.hebada.web.response.AjaxResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -29,10 +35,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.inject.Inject;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by paddy.luo on 2017/9/4.
@@ -91,8 +93,7 @@ public class CatalogRestController {
     @RequestMapping(value = URLs.CATALOG_ID, method = RequestMethod.PUT)
     @ApiOperation(value = "update", httpMethod = HttpMethod.PUT, notes = "update catalog")
     public AjaxResponse update(@PathVariable long id, @RequestBody CatalogRequest request) {
-        request.setId(id);
-        catalogService.update(catalogConverter.convertToCatalog(request));
+        catalogService.update(id, catalogConverter.convertToCatalog(request));
         return AjaxResponse.ok();
     }
 

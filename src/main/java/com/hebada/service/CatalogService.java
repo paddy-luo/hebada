@@ -3,11 +3,13 @@ package com.hebada.service;
 import com.hebada.converter.CatalogConverter;
 import com.hebada.domain.Catalog;
 import com.hebada.repository.CatalogJpaRepository;
-import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.List;
+
+import org.springframework.stereotype.Service;
 
 /**
  * Created by paddy.luo on 2017/9/4.
@@ -29,15 +31,10 @@ public class CatalogService {
     }
 
     @Transactional
-    public void update(Catalog catalog) {
-        catalogJpaRepository.save(catalogConverter.convertToCatalog(catalog, this.get(catalog.getId())));
-    }
-
-    @Transactional
-    public void updateName(long catalogId, String catalogName) {
-        Catalog catalog = this.get(catalogId);
-        catalog.setChineseName(catalogName);
-        catalogJpaRepository.save(catalog);
+    public void update(long id, Catalog catalog) {
+        Catalog catalogDomain = catalogJpaRepository.findOne(id);
+        if (catalogDomain == null) return;
+        catalogJpaRepository.save(catalogConverter.convertToCatalog(catalog, catalogDomain));
     }
 
     @Transactional

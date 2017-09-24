@@ -4,11 +4,6 @@ import com.hebada.converter.ArticleConverter;
 import com.hebada.domain.Article;
 import com.hebada.entity.ArticleStatus;
 import com.hebada.repository.ArticleJpaRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.inject.Inject;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -16,6 +11,12 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 /**
  * Created by paddy on 2017/9/9.
@@ -36,8 +37,10 @@ public class ArticleService {
     }
 
     @Transactional
-    public void update(Article article) {
-        articleJpaRepository.save(articleConverter.convertToArticle(article, this.findOne(article.getId())));
+    public void update(long id, Article article) {
+        Article articleDomain = this.findOne(id);
+        if (articleDomain == null) return;
+        articleJpaRepository.save(articleConverter.convertToArticle(article, articleDomain));
     }
 
     @Transactional

@@ -20,6 +20,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +32,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value = URLs.PRODUCT)
-@Api(basePath = URLs.PHOTO, description = "photo api")
+@Api(basePath = URLs.PRODUCT, description = "product api")
+@CrossOrigin(origins = "*", maxAge = 3600)
 @LoginRequired
 public class ProductRestController {
 
@@ -65,8 +67,7 @@ public class ProductRestController {
     @RequestMapping(value = URLs.PRODUCT_ID, method = RequestMethod.PUT)
     @ApiOperation(value = "update", notes = "update", httpMethod = HttpMethod.PUT)
     public AjaxResponse update(@PathVariable long id, @Validated @RequestBody ProductRequest request) {
-        request.setId(id);
-        productService.update(productConverter.convertToProduct(request));
+        productService.update(id, productConverter.convertToProduct(request));
         return AjaxResponse.ok();
     }
 

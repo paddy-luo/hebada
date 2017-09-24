@@ -32,8 +32,10 @@ public class ProductService {
     }
 
     @Transactional
-    public void update(Product product) {
-        productJpaRepository.save(productConverter.convertToProduct(product, this.get(product.getId())));
+    public void update(long id, Product product) {
+        Product productDomain = productJpaRepository.findOne(id);
+        if (productDomain == null) return;
+        productJpaRepository.save(productConverter.convertToProduct(product, productDomain));
     }
 
     @Transactional

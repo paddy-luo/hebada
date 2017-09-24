@@ -8,13 +8,15 @@ import com.hebada.web.request.UserRequest;
 import com.hebada.web.response.AjaxResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import javax.inject.Inject;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.inject.Inject;
 
 /**
  * Created by paddy on 2017/9/6.
@@ -22,6 +24,7 @@ import javax.inject.Inject;
 @RestController
 @RequestMapping(value = URLs.USER)
 @Api(basePath = URLs.USER, value = "UserRestController api", description = "User api")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserRestController {
 
     @Inject

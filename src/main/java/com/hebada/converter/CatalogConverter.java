@@ -3,14 +3,16 @@ package com.hebada.converter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.hebada.domain.Catalog;
+import com.hebada.entity.RouterTemplateName;
 import com.hebada.web.request.CatalogRequest;
 import com.hebada.web.response.CatalogResponse;
-import org.apache.commons.collections.CollectionUtils;
-import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by paddy on 2017/9/10.
@@ -23,7 +25,7 @@ public class CatalogConverter {
         catalog.setChineseName(request.getChineseName());
         catalog.setEnglishName(request.getEnglishName());
         catalog.setParentId(request.getParentId());
-        catalog.setTemplateName(request.getTemplateName());
+        catalog.setTemplateName(RouterTemplateName.getRouterTemplate(request.getTemplateName()));
         final Date now = new Date();
         if (request.getId() <= 0) {
             catalog.setCreatedTime(now);
@@ -70,10 +72,10 @@ public class CatalogConverter {
     public List<Catalog> convertToCatalogList(List<Catalog> result) {
         List<Catalog> catalogList = Lists.newArrayList();
         if (CollectionUtils.isEmpty(result)) return catalogList;
-        return getChildrenCatalog(result, null);
+        return getChildrenCatalog(result, 0L);
     }
 
-    private List<Catalog> getChildrenCatalog(List<Catalog> catalogList, Long parentId) {
+    private List<Catalog> getChildrenCatalog(List<Catalog> catalogList, long parentId) {
         List<Catalog> childrenCatalogList = Lists.newArrayList();
         for (Catalog catalog : catalogList) {
             if (catalog.getParentId() == parentId)

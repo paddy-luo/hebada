@@ -8,6 +8,7 @@ public class ArticleListResponse {
     private long id;
     private String title;
     private String articlePageImageUrl;
+    private String author;
     private String description;
     private String publishTime;
 
@@ -49,5 +50,13 @@ public class ArticleListResponse {
 
     public void setPublishTime(String publishTime) {
         this.publishTime = publishTime;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

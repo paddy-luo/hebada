@@ -1,9 +1,5 @@
 package com.hebada.entity;
 
-import com.google.common.collect.Lists;
-
-import java.util.List;
-
 /**
  * Created by paddy on 2017/9/13.
  */
@@ -51,11 +47,11 @@ public enum RouterTemplateName {
         this.description = description;
     }
 
-    public List<String> getAllTemplateType() {
-        List<String> templateNames = Lists.newArrayList();
-        for (RouterTemplateName templateName : values()) {
-            templateNames.add(templateName.getName());
+    public static RouterTemplateName getRouterTemplate(String name) {
+        for (RouterTemplateName routerTemplateName : values()) {
+            if (routerTemplateName.getName().equals(name))
+                return routerTemplateName;
         }
-        return templateNames;
+        throw new NullPointerException();
     }
 }

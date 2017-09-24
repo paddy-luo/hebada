@@ -9,9 +9,11 @@ public class ArticleRequest {
 
     private long id;
     private String title;
+    private String author;
     private long catalogId;
     private String keyWords;
     private String articlePageImageUrl;
+    private boolean recommended;
     private String content;
     private ArticleStatus status;
 
@@ -69,5 +71,21 @@ public class ArticleRequest {
 
     public void setStatus(ArticleStatus status) {
         this.status = status;
+    }
+
+    public boolean isRecommended() {
+        return recommended;
+    }
+
+    public void setRecommended(boolean recommended) {
+        this.recommended = recommended;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }
