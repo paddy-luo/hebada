@@ -2,13 +2,17 @@ package com.hebada.web.request;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by paddy on 2017/9/6.
  */
 public class UserRequest {
 
     private int id;
+    @NotNull(message = "user name is null")
     private String name;
+    @NotNull(message = "user password is null")
     private String password;
     private String originalPassword;
 

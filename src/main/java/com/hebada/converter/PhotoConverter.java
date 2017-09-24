@@ -6,14 +6,13 @@ import com.hebada.domain.Photo;
 import com.hebada.web.request.PhotoRequest;
 import com.hebada.web.response.PageResponse;
 import com.hebada.web.response.PhotoResponse;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 
 /**
  * Created by paddy.luo on 2017/9/19.
@@ -62,7 +61,7 @@ public class PhotoConverter {
 
     public PhotoResponse convertToPhotoResponse(Photo photo) {
         PhotoResponse response = new PhotoResponse();
-        response.setId(response.getId());
+        response.setId(photo.getId());
         response.setName(photo.getName());
         response.setDescription(photo.getDescription());
         response.setBigImageUrl(photo.getBigImageUrl());
@@ -80,5 +79,15 @@ public class PhotoConverter {
             imageUrls.add(imageMap);
         }
         return imageUrls;
+    }
+
+    public Map<Long, Photo> convertToPhotoMap(List<Photo> photoList) {
+        if (CollectionUtils.isEmpty(photoList)) return null;
+        Map<Long, Photo> photoMap = Maps.newHashMap();
+        for (Photo photo : photoList) {
+            if (photoMap.get(photo.getProductId()) == null)
+                photoMap.put(photo.getProductId(), photo);
+        }
+        return photoMap;
     }
 }

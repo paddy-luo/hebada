@@ -20,11 +20,6 @@ import com.hebada.web.request.CatalogRequest;
 import com.hebada.web.response.AjaxResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
-import java.util.List;
-
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -34,6 +29,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.inject.Inject;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by paddy.luo on 2017/9/4.
@@ -97,7 +96,6 @@ public class CatalogRestController {
         return AjaxResponse.ok();
     }
 
-
     @RequestMapping(value = URLs.CATALOG_ID, method = RequestMethod.DELETE)
     @ApiOperation(value = "delete", httpMethod = HttpMethod.DELETE, notes = "delete catalog")
     public AjaxResponse delete(@PathVariable long id) {
@@ -131,8 +129,10 @@ public class CatalogRestController {
     @LoginRequired(required = false)
     public AjaxResponse getProductList(@PathVariable long catalogId, @RequestBody com.hebada.web.request.PageRequest request) {
         Page<Product> productPage = productService.findAllByCatalogId(catalogId, request.getPageNumber(), request.getPageSize());
+        List<Photo> photoList = photoService.findPhotoListByProductIds(productConverter.convertToProductIds(productPage.getContent()));
+        Map<Long, Photo> photoMap = photoConverter.convertToPhotoMap(photoList);
         return AjaxResponse.ok().withData(productConverter.convertToProductListResponse(productPage
-            , request.getPageNumber(), request.getPageSize()));
+            , request.getPageNumber(), request.getPageSize(), photoMap));
     }
 
     // 获取资质荣誉等 图片列表

@@ -3,15 +3,19 @@ package com.hebada.service;
 import com.hebada.converter.PhotoConverter;
 import com.hebada.domain.Photo;
 import com.hebada.repository.PhotoJpaRepository;
-
-import java.util.List;
-
-import javax.transaction.Transactional;
-
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Created by paddy.luo on 2017/9/19.
@@ -51,5 +55,23 @@ public class PhotoService {
 
     public List<Photo> findPhotoListByProductId(long productId) {
         return photoJpaRepository.findByProductIdOrderByIdAsc(productId);
+    }
+
+    public List<Photo> findPhotoListByProductIds(List<Long> productIds) {
+        if (CollectionUtils.isEmpty(productIds)) return null;
+        return photoJpaRepository.findAll(where(productIds));
+    }
+
+    private Specification<Photo> where(final List<Long> productIds) {
+        return new Specification<Photo>() {
+
+            @Override
+            public Predicate toPredicate(Root root, CriteriaQuery query, CriteriaBuilder cb) {
+                Predicate predicates = cb.conjunction();
+                predicates.getExpressions().add(cb.in(root.get("productId").in(productIds)));
+                query.orderBy(cb.desc(root.get("id")));
+                return predicates;
+            }
+        };
     }
 }

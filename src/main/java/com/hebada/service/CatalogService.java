@@ -34,6 +34,13 @@ public class CatalogService {
     }
 
     @Transactional
+    public void updateName(long catalogId, String catalogName) {
+        Catalog catalog = this.get(catalogId);
+        catalog.setChineseName(catalogName);
+        catalogJpaRepository.save(catalog);
+    }
+
+    @Transactional
     public void delete(long id) {
         catalogJpaRepository.delete(id);
         catalogJpaRepository.deleteAllByParentId(id);

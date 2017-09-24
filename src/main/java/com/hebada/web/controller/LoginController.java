@@ -8,17 +8,16 @@ import com.hebada.web.request.UserRequest;
 import com.hebada.web.response.AjaxResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
-import javax.inject.Inject;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.inject.Inject;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by paddy on 2017/9/8.
@@ -31,6 +30,7 @@ public class LoginController {
     @Inject
     private UserService userService;
 
+    //todo: 登录验证失败
     @RequestMapping(value = URLs.USER_LOGIN, method = RequestMethod.POST)
     @ApiOperation(value = "login", httpMethod = HttpMethod.POST, notes = "login")
     @ResponseBody

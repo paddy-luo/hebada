@@ -3,13 +3,12 @@ package com.hebada.web.interceptor;
 import com.hebada.web.ControllerHelper;
 import com.hebada.web.WebConfig;
 import com.hebada.web.exception.NoAuthorizedExeption;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Created by paddy.luo on 2017/9/19.
@@ -21,6 +20,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         LoginRequired loginRequired = ControllerHelper.findMethodOrClassLevelAnnotation(handler, LoginRequired.class);
         if (loginRequired == null || !loginRequired.required()) return true;
         Cookie[] cookies = request.getCookies();
+        if (cookies == null) throw new NoAuthorizedExeption();
         for (Cookie cookie : cookies)
             if (WebConfig.LOGIN_USER.equals(cookie.getName())) return true;
         throw new NoAuthorizedExeption();
