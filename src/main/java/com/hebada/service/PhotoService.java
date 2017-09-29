@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 /**
  * Created by paddy.luo on 2017/9/19.
@@ -60,15 +61,22 @@ public class PhotoService {
 
     public List<Photo> findPhotoListByProductIds(List<Long> productIds) {
         if (CollectionUtils.isEmpty(productIds)) return null;
-        return photoJpaRepository.findAll(where(productIds));
+        return photoJpaRepository.findAll(where(null, productIds));
     }
 
-    private Specification<Photo> where(final List<Long> productIds) {
+    public Page<Photo> findPhotoList(String name, int currentPage, int pageSize) {
+        return photoJpaRepository.findAll(where(name, null), new PageRequest(currentPage, pageSize));
+    }
+
+    private Specification<Photo> where(final String name, final List<Long> productIds) {
         return new Specification<Photo>() {
 
             @Override
             public Predicate toPredicate(Root root, CriteriaQuery query, CriteriaBuilder cb) {
-                cb.in(root.get("productId").in(productIds));
+                if (StringUtils.hasLength(name))
+                    cb.like(root.get("name"), "%" + name + "%");
+                if (CollectionUtils.isNotEmpty(productIds))
+                    cb.in(root.get("productId").in(productIds));
                 query.orderBy(cb.desc(root.get("id")));
                 return null;
             }

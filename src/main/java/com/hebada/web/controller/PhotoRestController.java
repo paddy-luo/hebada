@@ -1,12 +1,15 @@
 package com.hebada.web.controller;
 
 import com.hebada.converter.PhotoConverter;
+import com.hebada.domain.Photo;
 import com.hebada.entity.HttpMethod;
 import com.hebada.entity.URLs;
 import com.hebada.service.PhotoService;
 import com.hebada.utils.ImageUtils;
+import com.hebada.web.request.PageRequest;
 import com.hebada.web.request.PhotoListRequest;
 import com.hebada.web.request.PhotoRequest;
+import com.hebada.web.request.PhotoSearchRequest;
 import com.hebada.web.response.AjaxResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -73,5 +77,13 @@ public class PhotoRestController {
         request.setId(id);
         photoService.update(photoConverter.convertToPhoto(request));
         return AjaxResponse.ok();
+    }
+
+
+    @RequestMapping(value = URLs.LIST, method = RequestMethod.POST)
+    @ApiOperation(value = "photoList", notes = "photo list", httpMethod = HttpMethod.POST)
+    public AjaxResponse getPhotoList(@RequestBody PageRequest<PhotoSearchRequest> request) {
+        Page<Photo> photoPage = photoService.findPhotoList(request.getParams().getName(), request.getPageNumber(), request.getPageSize());
+        
     }
 }
