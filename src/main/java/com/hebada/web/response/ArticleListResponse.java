@@ -10,6 +10,8 @@ public class ArticleListResponse {
     private String articlePageImageUrl;
     private String author;
     private String description;
+    private String createTime;
+    private String status;
     private String publishTime;
 
     public long getId() {
@@ -58,5 +60,21 @@ public class ArticleListResponse {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

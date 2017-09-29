@@ -105,6 +105,8 @@ public class ArticleConverter {
         String content = article.getContent();
         if (StringUtils.hasLength(content))
             response.setDescription(content.length() > 500 ? content.substring(0, 500) : content);
+        response.setCreateTime(formatDate(article.getCreatedTime()));
+        response.setStatus(article.getStatus().getStatus());
         response.setPublishTime(formatDate(article.getPublishTimed()));
         return response;
     }

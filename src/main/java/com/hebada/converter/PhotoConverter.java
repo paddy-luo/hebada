@@ -3,22 +3,44 @@ package com.hebada.converter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.hebada.domain.Photo;
+import com.hebada.utils.ImageUtils;
+import com.hebada.web.request.PhotoListRequest;
 import com.hebada.web.request.PhotoRequest;
 import com.hebada.web.response.PageResponse;
 import com.hebada.web.response.PhotoResponse;
-import org.apache.commons.collections.CollectionUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by paddy.luo on 2017/9/19.
  */
 @Service
 public class PhotoConverter {
+
+    public List<Photo> convertToPhotoList(PhotoListRequest request) {
+        //todo: 这边获取的上传图片以大图的数量为基准
+        final Date now = new Date();
+        List<Photo> photoList = Lists.newArrayList();
+        for (int i = 0; i < request.getBigImageUrl().size(); i++) {
+            Photo photo = new Photo();
+            photo.setName(request.getName() + "_" + ImageUtils.getRandomString(5));
+            photo.setProductId(request.getProductId());
+            photo.setCatalogId(request.getCatalogId());
+            photo.setBigImageUrl(request.getBigImageUrl().get(i));
+            photo.setSmallImageUrl(request.getSmallImageUrl().get(i));
+            photo.setDescription(request.getDescription());
+            photo.setCreatedTime(now);
+            photo.setUpdateTime(now);
+            photoList.add(photo);
+        }
+        return photoList;
+    }
 
     public Photo convertToPhoto(PhotoRequest request) {
         Photo photo = new Photo();

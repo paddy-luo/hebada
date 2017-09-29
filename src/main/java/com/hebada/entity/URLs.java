@@ -40,4 +40,7 @@ public class URLs {
     //photo url
     public static final String PHOTO_UPLOAD = "/upload";
     public static final String PHOTO_ID = ID;
+
+    // html page url
+    public static final String PAGE_INDEX = "index";
 }

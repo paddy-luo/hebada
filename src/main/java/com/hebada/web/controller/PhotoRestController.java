@@ -5,6 +5,7 @@ import com.hebada.entity.HttpMethod;
 import com.hebada.entity.URLs;
 import com.hebada.service.PhotoService;
 import com.hebada.utils.ImageUtils;
+import com.hebada.web.request.PhotoListRequest;
 import com.hebada.web.request.PhotoRequest;
 import com.hebada.web.response.AjaxResponse;
 import io.swagger.annotations.Api;
@@ -54,10 +55,9 @@ public class PhotoRestController {
 
     @RequestMapping(value = URLs.DEFAULT, method = RequestMethod.POST)
     @ApiOperation(value = "save", notes = "save image", httpMethod = HttpMethod.POST)
-    public AjaxResponse save(@Validated @RequestBody PhotoRequest request) {
-        boolean save = photoService.save(photoConverter.convertToPhoto(request));
-        if (save) return AjaxResponse.ok();
-        return AjaxResponse.error();
+    public AjaxResponse save(@Validated @RequestBody PhotoListRequest request) {
+        photoService.save(photoConverter.convertToPhotoList(request));
+        return AjaxResponse.ok();
     }
 
     @RequestMapping(value = URLs.PHOTO_ID, method = RequestMethod.DELETE)

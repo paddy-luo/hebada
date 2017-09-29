@@ -10,8 +10,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import javax.inject.Inject;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -35,10 +33,10 @@ public class LoginController {
     @RequestMapping(value = URLs.USER_LOGIN, method = RequestMethod.POST)
     @ApiOperation(value = "login", httpMethod = HttpMethod.POST, notes = "login")
     @ResponseBody
-    public AjaxResponse login(@RequestBody UserRequest request, HttpServletResponse response) {
+    public AjaxResponse login(@RequestBody UserRequest request, HttpSession session) {
         boolean hasUser = userService.findByNameAndPassword(request.getName(), request.getPassword());
         if (hasUser) {
-            response.addCookie(new Cookie(WebConfig.LOGIN_USER, request.getName()));
+            session.setAttribute(WebConfig.LOGIN_USER, true);
             return AjaxResponse.ok();
         } else return AjaxResponse.error().withDescription("账户和密码错误");
     }

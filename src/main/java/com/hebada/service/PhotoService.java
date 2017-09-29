@@ -35,10 +35,9 @@ public class PhotoService {
     }
 
     @Transactional
-    public boolean save(Photo photo) {
-        photoJpaRepository.save(photo);
-        if (photo.getId() > 0) return true;
-        return false;
+    public void save(List<Photo> photoList) {
+        if (CollectionUtils.isEmpty(photoList)) return;
+        photoJpaRepository.save(photoList);
     }
 
     @Transactional
